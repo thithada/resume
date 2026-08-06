@@ -3,17 +3,25 @@
 import {
   ArrowDown,
   ArrowUpRight,
+  BriefcaseBusiness,
   Check,
   ChevronRight,
   CircleDot,
+  Code2,
   Copy,
   Download,
-  Code2,
+  ExternalLink,
   GitBranch,
+  ImageIcon,
+  Languages,
   Mail,
   MapPin,
+  MonitorUp,
   Phone,
+  Plus,
   Sparkles,
+  Target,
+  UserRound,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -25,12 +33,20 @@ const projects = [
     role: "Software Developer · Bon8 Internship",
     period: "2026 — Present",
     status: "In progress",
+    image: "/images/check-pd.webp",
+    imageLabel: "CHECK PD / PRODUCT COVER",
+    imageSize: "1600 × 1000 px",
     description:
       "A mobile-first health assessment experience that guides users through digital tests, tracks progress, and turns complex sensor interactions into an approachable flow.",
     impact: [
       "Built five assessment modules using audio recording, motion sensors, and touch interactions.",
       "Created responsive registration, settings, assessment, history, and results journeys.",
       "Developed reusable mobile components, swipe navigation, animations, persistent forms, and frontend tests.",
+    ],
+    metrics: [
+      { value: "05", label: "Assessment modules", placeholder: false },
+      { value: "XX", label: "Users or test cases", placeholder: true },
+      { value: "XX%", label: "Completion improvement", placeholder: true },
     ],
     tech: ["React", "TypeScript", "LINE LIFF", "Web APIs"],
   },
@@ -41,12 +57,20 @@ const projects = [
     role: "Software Developer · Bon8 Internship",
     period: "2026 — Present",
     status: "Live product",
+    image: "/images/gen-h.webp",
+    imageLabel: "GEN-H / PRODUCT COVER",
+    imageSize: "1600 × 1000 px",
     description:
       "A gamified platform that encourages healthy, sustainable habits through daily quests, progress tracking, badges, and competitive leaderboards.",
     impact: [
       "Delivered quest, badge, notification, Hall of Fame, and XP-based leaderboard features.",
       "Implemented server logic, database schemas, seeding, progress tracking, and image submissions.",
       "Integrated LINE LIFF registration and session flows across a responsive component system.",
+    ],
+    metrics: [
+      { value: "05+", label: "Core feature systems", placeholder: false },
+      { value: "XX", label: "Daily active users", placeholder: true },
+      { value: "XX%", label: "Quest completion rate", placeholder: true },
     ],
     tech: ["Next.js", "React", "Prisma", "PostgreSQL", "LINE LIFF"],
   },
@@ -57,12 +81,20 @@ const projects = [
     role: "Software Engineer · NARIT Internship",
     period: "2025 — 2026",
     status: "Completed",
+    image: "/images/nashgui.webp",
+    imageLabel: "NASHGUI / PRODUCT COVER",
+    imageSize: "1600 × 1000 px",
     description:
       "A web application for generating and managing command sets used to control radio telescope equipment—streamlining highly technical operation workflows.",
     impact: [
       "Translated Figma designs into responsive React and Tailwind CSS interfaces.",
       "Integrated authenticated FastAPI REST endpoints and structured frontend state flows.",
       "Containerized application services with Docker for consistent deployment environments.",
+    ],
+    metrics: [
+      { value: "01", label: "Telescope workflow", placeholder: false },
+      { value: "XX", label: "Commands generated", placeholder: true },
+      { value: "XXh", label: "Operator time saved", placeholder: true },
     ],
     tech: ["React", "FastAPI", "MariaDB", "Docker"],
   },
@@ -75,6 +107,29 @@ const skillGroups = [
   { label: "Languages & AI", items: ["JavaScript", "Python", "PHP", "ChatGPT", "Claude", "Codex"] },
 ];
 
+const studySteps = [
+  {
+    label: "Problem",
+    title: "Make complex screening feel human.",
+    text: "The experience needed to capture meaningful audio, motion, and touch signals without making a health assessment feel technical or intimidating on a phone.",
+  },
+  {
+    label: "My role",
+    title: "Turn requirements into a product system.",
+    text: "I translated provided flows and designs into reusable React architecture across registration, settings, five assessments, history, and result journeys.",
+  },
+  {
+    label: "Challenge",
+    title: "Sensors, state, and mobile interaction.",
+    text: "The work combined browser microphone and motion access, persistent incomplete answers, responsive components, swipe navigation, animations, and testable frontend behavior.",
+  },
+  {
+    label: "Result",
+    title: "Five modules ready for the next phase.",
+    text: "The frontend assessment system is in place. The next phase is backend development and machine-learning analysis. Add validated user and testing outcomes here later.",
+  },
+];
+
 function SectionLabel({ number, children }: { number: string; children: React.ReactNode }) {
   return (
     <div className="section-label">
@@ -84,9 +139,48 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
   );
 }
 
+function ReplaceableImage({
+  src,
+  alt,
+  label,
+  size,
+  portrait = false,
+}: {
+  src: string;
+  alt: string;
+  label: string;
+  size: string;
+  portrait?: boolean;
+}) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className={`replaceable-image ${portrait ? "portrait-image" : "project-image"}`}>
+      <div className="image-grid" aria-hidden="true" />
+      <div className="image-placeholder">
+        {portrait ? <UserRound size={34} /> : <ImageIcon size={32} />}
+        <strong>{label}</strong>
+        <span>{size}</span>
+        <small>{src}</small>
+      </div>
+      {/* Native img keeps the shared component compatible with both vinext and the Vite/Vercel build. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        className={loaded ? "loaded" : ""}
+        src={src}
+        alt={alt}
+        onLoad={() => setLoaded(true)}
+        onError={() => setLoaded(false)}
+      />
+      <span className="replace-tag"><Plus size={12} /> Replace image</span>
+    </div>
+  );
+}
+
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [activeStudy, setActiveStudy] = useState(0);
 
   useEffect(() => {
     const updateProgress = () => {
@@ -112,6 +206,7 @@ export default function Home() {
         <a className="monogram" href="#top" aria-label="Back to top">TI<span>.</span></a>
         <div className="nav-links">
           <a href="#work">Work</a>
+          <a href="#case-study">Case study</a>
           <a href="#expertise">Expertise</a>
           <a href="#journey">Journey</a>
         </div>
@@ -144,14 +239,15 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-system" aria-label="Developer profile snapshot">
-          <div className="system-orbit orbit-one" />
-          <div className="system-orbit orbit-two" />
-          <div className="system-core">
-            <span className="core-kicker">CURRENT FOCUS</span>
-            <strong>PRODUCT ×<br />ENGINEERING</strong>
-            <small>React · TypeScript · AI</small>
-          </div>
+        <div className="portrait-stage" aria-label="Profile photo placeholder">
+          <div className="portrait-orbit" aria-hidden="true" />
+          <ReplaceableImage
+            src="/images/profile.webp"
+            alt="Portrait of Thithada Islam"
+            label="YOUR PORTRAIT"
+            size="1200 × 1500 px · 4:5"
+            portrait
+          />
           <div className="floating-tag tag-one"><Sparkles size={14} /> AI curious</div>
           <div className="floating-tag tag-two"><CircleDot size={14} /> UX minded</div>
           <div className="floating-tag tag-three">03 shipped products</div>
@@ -172,6 +268,7 @@ export default function Home() {
           <div className="about-copy">
             <p className="lead">I care about the moment a complicated system starts to feel simple.</p>
             <p>My work spans frontend architecture, backend APIs, data modeling, and product thinking. I enjoy translating ideas and requirements into user flows, database schemas, and working software—then refining the small interactions that make it feel complete.</p>
+            <p>The projects I enjoy most live where software meets the real world: health assessment sensors, habit-forming product systems, and radio telescope operations.</p>
             <p>I’m currently exploring practical ways to integrate AI into software development and product experiences.</p>
           </div>
           <div className="principles">
@@ -179,6 +276,13 @@ export default function Home() {
             <span>02 / Design for humans</span>
             <span>03 / Ship with intention</span>
           </div>
+        </div>
+
+        <div className="career-brief" aria-label="Career preferences">
+          <div><Target size={19} /><span>Target roles</span><strong>Frontend / Full-stack</strong></div>
+          <div><MonitorUp size={19} /><span>Work mode</span><strong>Remote / Hybrid</strong></div>
+          <div><BriefcaseBusiness size={19} /><span>Availability</span><strong>Open to discuss</strong></div>
+          <div><Languages size={19} /><span>Languages</span><strong>Thai · English</strong></div>
         </div>
       </section>
 
@@ -196,6 +300,14 @@ export default function Home() {
                 <span>{project.number}</span>
                 <span className="project-status"><i />{project.status}</span>
               </div>
+
+              <ReplaceableImage
+                src={project.image}
+                alt={`${project.title} project preview`}
+                label={project.imageLabel}
+                size={project.imageSize}
+              />
+
               <div className="project-title-row">
                 <div>
                   <h3>{project.title}</h3>
@@ -207,10 +319,26 @@ export default function Home() {
                 <span>{project.role}</span>
                 <span>{project.period}</span>
               </div>
+
+              <div className="project-metrics">
+                {project.metrics.map((metric) => (
+                  <div className={metric.placeholder ? "metric-placeholder" : ""} key={metric.label}>
+                    <strong>{metric.value}</strong>
+                    <span>{metric.label}</span>
+                    {metric.placeholder && <small>replace later</small>}
+                  </div>
+                ))}
+              </div>
+
               <p className="project-description">{project.description}</p>
               <ul>
                 {project.impact.map((item) => <li key={item}><ChevronRight size={15} />{item}</li>)}
               </ul>
+              <div className="project-links" aria-label={`${project.title} links`}>
+                <span><ExternalLink size={14} /> Add live demo</span>
+                <span><Code2 size={14} /> Add repository</span>
+                <span><ImageIcon size={14} /> Add 2–4 screenshots</span>
+              </div>
               <div className="tech-list">
                 {project.tech.map((tech) => <span key={tech}>{tech}</span>)}
               </div>
@@ -219,8 +347,46 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="case-study section-shell" id="case-study">
+        <SectionLabel number="03">Featured case study</SectionLabel>
+        <div className="case-heading">
+          <div>
+            <span className="case-kicker">CHECK PD · DEEP DIVE</span>
+            <h2>Beyond the screens.<br /><em>Inside the thinking.</em></h2>
+          </div>
+          <p>A compact story recruiters can scan quickly. Replace the final outcome with validated product data when it becomes available.</p>
+        </div>
+
+        <div className="case-panel">
+          <div className="case-tabs" role="tablist" aria-label="Case study stages">
+            {studySteps.map((step, index) => (
+              <button
+                className={activeStudy === index ? "active" : ""}
+                key={step.label}
+                type="button"
+                role="tab"
+                aria-selected={activeStudy === index}
+                onClick={() => setActiveStudy(index)}
+              >
+                <span>0{index + 1}</span>{step.label}
+              </button>
+            ))}
+          </div>
+          <div className="case-content" role="tabpanel">
+            <span>0{activeStudy + 1} / 04</span>
+            <h3>{studySteps[activeStudy].title}</h3>
+            <p>{studySteps[activeStudy].text}</p>
+          </div>
+          <div className="case-signal" aria-hidden="true">
+            {[42, 68, 34, 82, 58, 92, 48, 74, 38, 66, 52, 88].map((height, index) => (
+              <i key={index} style={{ height: `${height}%`, animationDelay: `${index * 80}ms` }} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="expertise section-shell" id="expertise">
-        <SectionLabel number="03">Expertise</SectionLabel>
+        <SectionLabel number="04">Expertise</SectionLabel>
         <div className="expertise-heading">
           <h2>A versatile stack.<br /><em>One clear purpose.</em></h2>
           <p>Choosing the right tools to make ideas useful, maintainable, and ready to grow.</p>
@@ -230,16 +396,38 @@ export default function Home() {
             <div className="skill-card" key={group.label}>
               <span>0{index + 1}</span>
               <h3>{group.label}</h3>
-              <div>
-                {group.items.map((item) => <p key={item}>{item}</p>)}
-              </div>
+              <div>{group.items.map((item) => <p key={item}>{item}</p>)}</div>
             </div>
           ))}
+        </div>
+
+        <div className="working-style">
+          <div>
+            <span>WORKING STYLE</span>
+            <h3>How I contribute beyond code.</h3>
+          </div>
+          <div className="working-tags">
+            {[
+              "Requirement breakdown",
+              "User-flow thinking",
+              "Figma handoff",
+              "Git workflow",
+              "API integration",
+              "Responsive UI",
+              "Frontend testing",
+              "AI-assisted development",
+            ].map((item) => <span key={item}>{item}</span>)}
+          </div>
+          <div className="language-card">
+            <Languages size={22} />
+            <div><strong>Thai</strong><span>Native</span></div>
+            <div><strong>English</strong><span>Add proficiency level</span></div>
+          </div>
         </div>
       </section>
 
       <section className="journey section-shell" id="journey">
-        <SectionLabel number="04">Journey</SectionLabel>
+        <SectionLabel number="05">Journey</SectionLabel>
         <div className="journey-layout">
           <h2>Always learning.<br /><em>Always building.</em></h2>
           <div className="timeline">
@@ -262,7 +450,7 @@ export default function Home() {
       <section className="contact section-shell" id="contact">
         <div className="contact-noise" aria-hidden="true" />
         <div className="availability"><span className="status-dot" /> Open to software engineering opportunities</div>
-        <p>Have a role, project, or idea in mind?</p>
+        <p>Frontend · Full-stack · Remote / Hybrid</p>
         <a className="contact-headline" href="mailto:thithadatomas@gmail.com">
           Let’s make it <em>real.</em><ArrowUpRight />
         </a>
