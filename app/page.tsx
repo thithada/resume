@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   BriefcaseBusiness,
   Check,
+  ChevronLeft,
   ChevronRight,
   CircleDot,
   Code2,
@@ -21,9 +22,8 @@ import {
   Plus,
   Sparkles,
   Target,
-  UserRound,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const projects = [
   {
@@ -33,9 +33,12 @@ const projects = [
     role: "Software Developer · Bon8 Internship",
     period: "2026 — Present",
     status: "In progress",
-    image: "/images/check-pd.webp",
-    imageLabel: "CHECK PD / PRODUCT COVER",
-    imageSize: "1600 × 1000 px",
+    images: [
+      { src: "/images/check-pd-01.webp", label: "01 / Cover" },
+      { src: "/images/check-pd-02.webp", label: "02 / Assessment" },
+      { src: "/images/check-pd-03.webp", label: "03 / Results" },
+      { src: "/images/check-pd-04.webp", label: "04 / Mobile flow" },
+    ],
     description:
       "A mobile-first health assessment experience that guides users through digital tests, tracks progress, and turns complex sensor interactions into an approachable flow.",
     impact: [
@@ -57,9 +60,12 @@ const projects = [
     role: "Software Developer · Bon8 Internship",
     period: "2026 — Present",
     status: "Live product",
-    image: "/images/gen-h.webp",
-    imageLabel: "GEN-H / PRODUCT COVER",
-    imageSize: "1600 × 1000 px",
+    images: [
+      { src: "/images/gen-h-01.webp", label: "01 / Cover" },
+      { src: "/images/gen-h-02.webp", label: "02 / Quests" },
+      { src: "/images/gen-h-03.webp", label: "03 / Badges" },
+      { src: "/images/gen-h-04.webp", label: "04 / Leaderboard" },
+    ],
     description:
       "A gamified platform that encourages healthy, sustainable habits through daily quests, progress tracking, badges, and competitive leaderboards.",
     impact: [
@@ -81,9 +87,12 @@ const projects = [
     role: "Software Engineer · NARIT Internship",
     period: "2025 — 2026",
     status: "Completed",
-    image: "/images/nashgui.webp",
-    imageLabel: "NASHGUI / PRODUCT COVER",
-    imageSize: "1600 × 1000 px",
+    images: [
+      { src: "/images/nashgui-01.webp", label: "01 / Cover" },
+      { src: "/images/nashgui-02.webp", label: "02 / Commands" },
+      { src: "/images/nashgui-03.webp", label: "03 / Templates" },
+      { src: "/images/nashgui-04.webp", label: "04 / Workflow" },
+    ],
     description:
       "A web application for generating and managing command sets used to control radio telescope equipment—streamlining highly technical operation workflows.",
     impact: [
@@ -144,21 +153,19 @@ function ReplaceableImage({
   alt,
   label,
   size,
-  portrait = false,
 }: {
   src: string;
   alt: string;
   label: string;
   size: string;
-  portrait?: boolean;
 }) {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className={`replaceable-image ${portrait ? "portrait-image" : "project-image"}`}>
+    <div className="replaceable-image">
       <div className="image-grid" aria-hidden="true" />
       <div className="image-placeholder">
-        {portrait ? <UserRound size={34} /> : <ImageIcon size={32} />}
+        <ImageIcon size={32} />
         <strong>{label}</strong>
         <span>{size}</span>
         <small>{src}</small>
@@ -177,10 +184,62 @@ function ReplaceableImage({
   );
 }
 
+function ProjectGallery({
+  projectTitle,
+  images,
+}: {
+  projectTitle: string;
+  images: Array<{ src: string; label: string }>;
+}) {
+  const [activeImage, setActiveImage] = useState(0);
+  const previous = () => setActiveImage((current) => (current - 1 + images.length) % images.length);
+  const next = () => setActiveImage((current) => (current + 1) % images.length);
+
+  return (
+    <div className="project-gallery">
+      <div className="gallery-main">
+        <ReplaceableImage
+          src={images[activeImage].src}
+          alt={`${projectTitle} — ${images[activeImage].label}`}
+          label={`${projectTitle.toUpperCase()} / ${images[activeImage].label.toUpperCase()}`}
+          size="1600 × 1000 px"
+        />
+        <div className="gallery-controls">
+          <span>0{activeImage + 1} / 0{images.length}</span>
+          <div>
+            <button type="button" onClick={previous} aria-label={`Previous ${projectTitle} image`}><ChevronLeft size={16} /></button>
+            <button type="button" onClick={next} aria-label={`Next ${projectTitle} image`}><ChevronRight size={16} /></button>
+          </div>
+        </div>
+      </div>
+      <div className="gallery-thumbnails" aria-label={`${projectTitle} image gallery`}>
+        {images.map((image, index) => (
+          <button
+            className={activeImage === index ? "active" : ""}
+            key={image.src}
+            type="button"
+            onClick={() => setActiveImage(index)}
+            aria-label={`Show ${image.label}`}
+            aria-pressed={activeImage === index}
+          >
+            <ReplaceableImage
+              src={image.src}
+              alt=""
+              label={`0${index + 1}`}
+              size={image.label}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copied, setCopied] = useState(false);
   const [activeStudy, setActiveStudy] = useState(0);
+  const cursorAura = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateProgress = () => {
@@ -192,6 +251,62 @@ export default function Home() {
     return () => window.removeEventListener("scroll", updateProgress);
   }, []);
 
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const aura = cursorAura.current;
+    if (!aura || reduceMotion || !finePointer) return;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+    let frame = 0;
+
+    const animate = () => {
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+      aura.style.transform = `translate3d(${currentX - 130}px, ${currentY - 130}px, 0)`;
+      frame = window.requestAnimationFrame(animate);
+    };
+    const move = (event: PointerEvent) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      aura.classList.add("active");
+    };
+    const leave = () => aura.classList.remove("active");
+
+    window.addEventListener("pointermove", move, { passive: true });
+    document.documentElement.addEventListener("mouseleave", leave);
+    frame = window.requestAnimationFrame(animate);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      document.documentElement.removeEventListener("mouseleave", leave);
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  useEffect(() => {
+    const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      items.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8%" },
+    );
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+
   const copyEmail = async () => {
     await navigator.clipboard.writeText("thithadatomas@gmail.com");
     setCopied(true);
@@ -200,6 +315,7 @@ export default function Home() {
 
   return (
     <main>
+      <div className="cursor-aura" ref={cursorAura} aria-hidden="true" />
       <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
 
       <nav className="nav-shell" aria-label="Main navigation">
@@ -239,15 +355,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="portrait-stage" aria-label="Profile photo placeholder">
-          <div className="portrait-orbit" aria-hidden="true" />
-          <ReplaceableImage
-            src="/images/profile.webp"
-            alt="Portrait of Thithada Islam"
-            label="YOUR PORTRAIT"
-            size="1200 × 1500 px · 4:5"
-            portrait
-          />
+        <div className="hero-system" aria-label="Developer profile snapshot">
+          <div className="system-orbit orbit-one" />
+          <div className="system-orbit orbit-two" />
+          <div className="system-core">
+            <span className="core-kicker">CURRENT FOCUS</span>
+            <strong>PRODUCT ×<br />ENGINEERING</strong>
+            <small>React · TypeScript · AI</small>
+          </div>
           <div className="floating-tag tag-one"><Sparkles size={14} /> AI curious</div>
           <div className="floating-tag tag-two"><CircleDot size={14} /> UX minded</div>
           <div className="floating-tag tag-three">03 shipped products</div>
@@ -261,7 +376,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="about section-shell" id="about">
+      <section className="about section-shell scroll-reveal" id="about" data-reveal>
         <SectionLabel number="01">Profile</SectionLabel>
         <div className="about-grid">
           <h2>Equal parts <em>logic</em><br />and <em>craft.</em></h2>
@@ -286,7 +401,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="work section-shell dark-section" id="work">
+      <section className="work section-shell dark-section scroll-reveal" id="work" data-reveal>
         <SectionLabel number="02">Selected work</SectionLabel>
         <div className="work-heading">
           <h2>Projects with<br /><em>real-world signal.</em></h2>
@@ -295,18 +410,13 @@ export default function Home() {
 
         <div className="projects">
           {projects.map((project) => (
-            <article className="project-card" key={project.number}>
+            <article className="project-card scroll-reveal" data-reveal key={project.number}>
               <div className="project-topline">
                 <span>{project.number}</span>
                 <span className="project-status"><i />{project.status}</span>
               </div>
 
-              <ReplaceableImage
-                src={project.image}
-                alt={`${project.title} project preview`}
-                label={project.imageLabel}
-                size={project.imageSize}
-              />
+              <ProjectGallery projectTitle={project.title} images={project.images} />
 
               <div className="project-title-row">
                 <div>
@@ -347,7 +457,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="case-study section-shell" id="case-study">
+      <section className="case-study section-shell scroll-reveal" id="case-study" data-reveal>
         <SectionLabel number="03">Featured case study</SectionLabel>
         <div className="case-heading">
           <div>
@@ -385,7 +495,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="expertise section-shell" id="expertise">
+      <section className="expertise section-shell scroll-reveal" id="expertise" data-reveal>
         <SectionLabel number="04">Expertise</SectionLabel>
         <div className="expertise-heading">
           <h2>A versatile stack.<br /><em>One clear purpose.</em></h2>
@@ -426,7 +536,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="journey section-shell" id="journey">
+      <section className="journey section-shell scroll-reveal" id="journey" data-reveal>
         <SectionLabel number="05">Journey</SectionLabel>
         <div className="journey-layout">
           <h2>Always learning.<br /><em>Always building.</em></h2>
@@ -447,7 +557,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="contact section-shell" id="contact">
+      <section className="contact section-shell scroll-reveal" id="contact" data-reveal>
         <div className="contact-noise" aria-hidden="true" />
         <div className="availability"><span className="status-dot" /> Open to software engineering opportunities</div>
         <p>Frontend · Full-stack · Remote / Hybrid</p>
