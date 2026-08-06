@@ -230,7 +230,9 @@ type Project = {
 };
 ```
 
-ยังไม่สร้างหน้า `/projects` ใน commit นี้ เพราะยังไม่มีข้อมูลและรูปของอีก 4–5 โปรเจกต์ การสร้างหลังได้รับข้อมูลจริงจะทำให้โครงสร้างไม่ต้องเดาและไม่เกิดหน้าว่าง
+หน้าแรกมี `Project archive` แบบกระชับสำหรับ repair-report, autocar, Project-nutrition และ BackTest พร้อมลิงก์ไปหน้า `/projects` ซึ่งรวมทั้ง 7 โปรเจกต์ หน้า index ใช้การ์ดสองคอลัมน์บน desktop และหนึ่งคอลัมน์บน mobile โดยแต่ละการ์ดมี gallery ที่จำนวนรูปเป็นอิสระต่อกัน
+
+หน้า `/projects` ใช้ Ink เป็นพื้นหลัก, Acid Lime เป็น signal และคง cursor aura แบบเดียวกับหน้าแรก เส้นทางนี้รองรับทั้ง vinext local development และ Vercel static build
 
 ### Complexity budget — ป้องกันเว็บดูแน่นหรือเละ
 
@@ -243,7 +245,8 @@ type Project = {
 - Cursor aura, scroll reveal และ hero orbit เป็น motion หลักที่เพียงพอแล้ว
 - ไม่เพิ่ม particle background, custom cursor รูปทรงซับซ้อน, horizontal scroll หรือ 3D tilt พร้อมกัน
 - เมื่อใส่ข้อมูลจริง ต้องลบ placeholder link และ metrics ที่ไม่ใช้ ไม่ปล่อยทุกตัวไว้บน production
-- Gallery ใช้ 4 รูปบนหน้าแรก ส่วน detail page อาจใช้ 6–10 รูปได้
+- Gallery ไม่จำกัดจำนวนรูป: desktop แสดง thumbnail 4 รูปใน viewport แล้วเลื่อนแนวตั้งเมื่อมีมากกว่า 4 รูป ส่วน mobile ใช้ thumbnail rail แนวนอน
+- หน้า `/projects` ใช้ thumbnail rail แนวนอนในการ์ดแต่ละใบ จำนวนรูปของแต่ละโปรเจกต์ไม่จำเป็นต้องเท่ากัน
 - หาก section ใดไม่ช่วยให้ recruiter ตัดสินใจเรียกสัมภาษณ์ ควรย้ายไป detail page หรือตัดออก
 
 ### Beyond code / งานอดิเรก
@@ -256,7 +259,7 @@ type Project = {
 - เลือกงานอดิเรกจริงไม่เกิน 3 อย่าง
 - เขียนเป็นคำสั้นพร้อมเหตุผลหนึ่งบรรทัด ไม่ใช้ skill bar
 - เลือกสิ่งที่ช่วยเปิดบทสนทนาในการสัมภาษณ์ หรือสะท้อนความอยากรู้อยากเห็น วินัย และวิธีคิด
-- ห้ามสมมติงานอดิเรกแทนเจ้าของเว็บ ต้องได้รับข้อมูลจริงก่อนเพิ่ม
+- ข้อความ Photography, Running และ Music ในเวอร์ชันนี้เป็น starter content ที่ติดป้าย `Editable starter content` ต้องยืนยันหรือเปลี่ยนเป็นงานอดิเรกจริงก่อนใช้สมัครงาน
 
 ตัวอย่างโครงสร้างข้อความ:
 
@@ -267,7 +270,7 @@ Running — A quiet system for consistency and reset.
 Music — [personal detail in one sentence].
 ```
 
-ตัวอย่างข้างต้นเป็นเพียงรูปแบบ ห้ามนำขึ้นเว็บจนกว่าจะยืนยันว่าเป็นงานอดิเรกจริง
+แถบนี้ถูกเพิ่มก่อน Contact โดยตั้งใจให้มีขนาดเล็กและไม่แข่งขันกับ Journey หรือ Selected work
 
 ## 10. Content Rules
 
@@ -284,7 +287,9 @@ Components หลัก:
 
 - `SectionLabel` — หมายเลขวงกลม + mono label
 - `HeroSystem` — orbital signature
-- `ProjectGallery` — main image + thumbnails + controls
+- `ProjectGallery` — main image + scrollable variable-length thumbnails + controls
+- `ProjectArchive` — รายชื่อโปรเจกต์เพิ่มเติมแบบกระชับ ไม่แย่งความเด่นจาก featured work
+- `BeyondCode` — แถบงานอดิเรก 2–3 รายการก่อน Contact
 - `ProjectMetrics` — ตัวเลข impact สามช่อง
 - `CaseStudyTabs` — Problem / My role / Challenge / Result
 - `SkillGrid` — สี่หมวดทักษะ
@@ -351,9 +356,9 @@ npm run lint → Vite production build → deploy
 
 ## 15. Next Recommended Phase
 
-1. รวบรวมชื่อและข้อมูลอีก 4–5 โปรเจกต์
-2. เลือก category และกำหนดว่าโปรเจกต์ใด featured
-3. เตรียมรูป 3–6 รูปต่อโปรเจกต์
+1. เติมบทบาท เทคโนโลยี ผลลัพธ์ และ visibility ของ BackTest ใน Project archive
+2. ยืนยันหรือแก้ Photography, Running และ Music ให้เป็นงานอดิเรกจริง
+3. เตรียมรูปตามจำนวนที่ช่วยเล่าเรื่องของแต่ละโปรเจกต์ โดยไม่กำหนดขั้นต่ำหรือสูงสุดตายตัว
 4. สร้าง `/projects` index
 5. สร้าง detail page สำหรับ 1–2 case studies ที่แข็งแรงที่สุด
 6. เติม demo URL, repository URL และ metrics ที่ยืนยันแล้ว

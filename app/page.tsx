@@ -109,6 +109,28 @@ const projects = [
   },
 ];
 
+const additionalProjects = [
+  { number: "04", title: "repair-report", visibility: "Public" },
+  { number: "05", title: "autocar", visibility: "Public" },
+  { number: "06", title: "Project-nutrition", visibility: "Private" },
+  { number: "07", title: "BackTest", visibility: "Add visibility" },
+];
+
+const beyondCode = [
+  {
+    title: "Photography",
+    text: "Finding structure, light, and small details in ordinary scenes.",
+  },
+  {
+    title: "Running",
+    text: "A quiet routine for consistency, patience, and a clear reset.",
+  },
+  {
+    title: "Music",
+    text: "Space away from the screen to recharge and notice new ideas.",
+  },
+];
+
 const skillGroups = [
   { label: "Frontend", items: ["React", "Next.js", "TypeScript", "Vue", "Tailwind CSS"] },
   { label: "Backend", items: ["FastAPI", "API Routes", "RESTful API", "Prisma ORM"] },
@@ -194,18 +216,22 @@ function ProjectGallery({
   const [activeImage, setActiveImage] = useState(0);
   const previous = () => setActiveImage((current) => (current - 1 + images.length) % images.length);
   const next = () => setActiveImage((current) => (current + 1) % images.length);
+  const currentImage = images[activeImage] ?? images[0];
+  const formatCount = (value: number) => String(value).padStart(2, "0");
+
+  if (!currentImage) return null;
 
   return (
     <div className="project-gallery">
       <div className="gallery-main">
         <ReplaceableImage
-          src={images[activeImage].src}
-          alt={`${projectTitle} — ${images[activeImage].label}`}
-          label={`${projectTitle.toUpperCase()} / ${images[activeImage].label.toUpperCase()}`}
+          src={currentImage.src}
+          alt={`${projectTitle} — ${currentImage.label}`}
+          label={`${projectTitle.toUpperCase()} / ${currentImage.label.toUpperCase()}`}
           size="1600 × 1000 px"
         />
         <div className="gallery-controls">
-          <span>0{activeImage + 1} / 0{images.length}</span>
+          <span>{formatCount(activeImage + 1)} / {formatCount(images.length)}</span>
           <div>
             <button type="button" onClick={previous} aria-label={`Previous ${projectTitle} image`}><ChevronLeft size={16} /></button>
             <button type="button" onClick={next} aria-label={`Next ${projectTitle} image`}><ChevronRight size={16} /></button>
@@ -225,7 +251,7 @@ function ProjectGallery({
             <ReplaceableImage
               src={image.src}
               alt=""
-              label={`0${index + 1}`}
+              label={formatCount(index + 1)}
               size={image.label}
             />
           </button>
@@ -322,6 +348,7 @@ export default function Home() {
         <a className="monogram" href="#top" aria-label="Back to top">TI<span>.</span></a>
         <div className="nav-links">
           <a href="#work">Work</a>
+          <a href="/projects">All projects</a>
           <a href="#case-study">Case study</a>
           <a href="#expertise">Expertise</a>
           <a href="#journey">Journey</a>
@@ -447,13 +474,32 @@ export default function Home() {
               <div className="project-links" aria-label={`${project.title} links`}>
                 <span><ExternalLink size={14} /> Add live demo</span>
                 <span><Code2 size={14} /> Add repository</span>
-                <span><ImageIcon size={14} /> Add 2–4 screenshots</span>
+                <span><ImageIcon size={14} /> Add project screenshots</span>
               </div>
               <div className="tech-list">
                 {project.tech.map((tech) => <span key={tech}>{tech}</span>)}
               </div>
             </article>
           ))}
+        </div>
+
+        <div className="project-archive">
+          <div className="archive-heading">
+            <span>MORE BUILDS / 04—07</span>
+            <h3>Project archive</h3>
+            <p>Additional work ready for details, screenshots, and case-study notes.</p>
+            <a href="/projects">Explore all projects <ArrowUpRight size={16} /></a>
+          </div>
+          <div className="archive-list">
+            {additionalProjects.map((project) => (
+              <a href={`/projects#${project.title.toLowerCase()}`} key={project.number}>
+                <span>{project.number}</span>
+                <strong>{project.title}</strong>
+                <small className={project.visibility === "Private" ? "private" : ""}>{project.visibility}</small>
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -556,6 +602,23 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <aside className="beyond-code scroll-reveal" aria-labelledby="beyond-code-title" data-reveal>
+        <div className="beyond-code-heading">
+          <span>06 / BEYOND CODE</span>
+          <h2 id="beyond-code-title">A little more <em>human.</em></h2>
+          <small>Editable starter content</small>
+        </div>
+        <div className="beyond-code-list">
+          {beyondCode.map((item, index) => (
+            <article key={item.title}>
+              <span>0{index + 1}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </aside>
 
       <section className="contact section-shell scroll-reveal" id="contact" data-reveal>
         <div className="contact-noise" aria-hidden="true" />

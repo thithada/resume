@@ -3,5 +3,8 @@
   "framework": null,
   "buildCommand": "npm run build:vercel",
   "outputDirectory": "vercel-dist",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/projects", "destination": "/index.html" }
+  ]
 }
