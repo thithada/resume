@@ -146,7 +146,16 @@ Motion ของเว็บมีหน้าที่อธิบาย hierar
 - ใช้ easing `cubic-bezier(.2,.75,.2,1)`
 - แสดงเพียงครั้งแรกเพื่อไม่ให้รบกวนเวลาเลื่อนกลับ
 
-### 8.4 Ambient motion
+### 8.4 Language switch
+
+- มีปุ่ม `EN / TH` แบบ segmented control ใน Navigation ของหน้าแรกและหน้า `/projects`
+- English เป็นค่าเริ่มต้น ส่วนตัวเลือกของผู้ใช้บันทึกใน `localStorage`
+- เมื่อเปลี่ยนภาษา ค่า `lang` บน `<html>` และชื่อหน้าใน browser จะเปลี่ยนตาม
+- แปล Navigation, heading, body copy, project status, case study, Journey, Beyond code, CTA และ accessibility label
+- คงชื่อบุคคล ชื่อโปรเจกต์ ชื่อบริษัท และเทคโนโลยีเป็นภาษาเดิม
+- ภาษาไทยใช้ layout และ visual hierarchy เดียวกับภาษาอังกฤษ แต่ลด letter spacing และเพิ่ม line height ใน headline เพื่อให้อ่านง่าย
+
+### 8.5 Ambient motion
 
 - Hero orbit หมุนช้า 24–30 วินาที
 - Floating tags ขยับขึ้นลงระยะสั้น
@@ -154,7 +163,7 @@ Motion ของเว็บมีหน้าที่อธิบาย hierar
 - Project underline และลูกศรตอบสนองต่อ hover
 - Gallery image zoom ไม่เกินประมาณ 2.5%
 
-### 8.5 Reduced motion
+### 8.6 Reduced motion
 
 เมื่อ `prefers-reduced-motion: reduce`:
 
@@ -162,6 +171,15 @@ Motion ของเว็บมีหน้าที่อธิบาย hierar
 - ลด animation และ transition เหลือเกือบทันที
 - Cursor aura ไม่ทำงาน
 - เนื้อหาต้องยังแสดงครบและใช้งานได้
+
+### 8.7 Edge safety / ขอบจอ
+
+- Container หลักเว้นขอบ 24px บน desktop และ 16px บน mobile
+- Hero ไม่ใช้ `overflow: hidden` เพราะจะตัดส่วน overhang ของตัวอักษร serif/italic
+- ใช้ `minmax(0, 1fr)` และ `min-width: 0` กับ Grid child เพื่อให้ข้อความยาวหดและตัดบรรทัดภายใน Container
+- `body` ใช้ `overflow-x: clip` ป้องกัน decorative element สร้าง horizontal scrollbar โดยไม่ตัด glyph ที่ขอบ Container
+- บน mobile ปุ่ม Résumé เหลือไอคอน Download เพื่อให้ Language toggle และ Navigation ไม่ชนขอบ
+- Gallery และ Case-study tabs ที่ยาวใช้ scroll rail ภายใน Component แทนการดันความกว้างของหน้า
 
 ## 9. Content Architecture
 
@@ -290,6 +308,7 @@ Components หลัก:
 - `ProjectGallery` — main image + scrollable variable-length thumbnails + controls
 - `ProjectArchive` — รายชื่อโปรเจกต์เพิ่มเติมแบบกระชับ ไม่แย่งความเด่นจาก featured work
 - `BeyondCode` — แถบงานอดิเรก 2–3 รายการก่อน Contact
+- `LanguageToggle` — ตัวเลือก EN / TH ที่ใช้ร่วมกันทุก route และจำค่าบนอุปกรณ์
 - `ProjectMetrics` — ตัวเลข impact สามช่อง
 - `CaseStudyTabs` — Problem / My role / Challenge / Result
 - `SkillGrid` — สี่หมวดทักษะ

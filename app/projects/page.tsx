@@ -14,6 +14,7 @@ import {
   Plus,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { LanguageToggle, useLanguage } from "../i18n";
 
 type ProjectImage = { src: string; label: string };
 
@@ -147,7 +148,17 @@ const allProjects: Project[] = [
   },
 ];
 
-function ReplaceableProjectImage({ image, title, compact = false }: { image: ProjectImage; title: string; compact?: boolean }) {
+function ReplaceableProjectImage({
+  image,
+  title,
+  compact = false,
+  t,
+}: {
+  image: ProjectImage;
+  title: string;
+  compact?: boolean;
+  t: (text: string) => string;
+}) {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -155,23 +166,23 @@ function ReplaceableProjectImage({ image, title, compact = false }: { image: Pro
       <div className="image-grid" aria-hidden="true" />
       <div className="projects-image-placeholder">
         <ImageIcon size={compact ? 18 : 30} />
-        <strong>{compact ? image.label : `${title} / ${image.label}`}</strong>
+        <strong>{compact ? t(image.label) : `${title} / ${t(image.label)}`}</strong>
         {!compact && <small>{image.src}</small>}
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className={loaded ? "loaded" : ""}
         src={image.src}
-        alt={compact ? "" : `${title} — ${image.label}`}
+        alt={compact ? "" : `${title} — ${t(image.label)}`}
         onLoad={() => setLoaded(true)}
         onError={() => setLoaded(false)}
       />
-      {!compact && <span className="replace-tag"><Plus size={12} /> Replace image</span>}
+      {!compact && <span className="replace-tag"><Plus size={12} /> {t("Replace image")}</span>}
     </div>
   );
 }
 
-function ProjectIndexCard({ project }: { project: Project }) {
+function ProjectIndexCard({ project, t }: { project: Project; t: (text: string) => string }) {
   const [activeImage, setActiveImage] = useState(0);
   const count = project.images.length;
   const formatCount = (value: number) => String(value).padStart(2, "0");
@@ -183,40 +194,40 @@ function ProjectIndexCard({ project }: { project: Project }) {
     <article className="projects-index-card" id={project.slug}>
       <div className="projects-card-topline">
         <span>{project.number} / 07</span>
-        <span>{project.visibility}</span>
+        <span>{t(project.visibility)}</span>
       </div>
 
       <div className="projects-card-gallery">
-        <ReplaceableProjectImage image={currentImage} title={project.title} />
+        <ReplaceableProjectImage image={currentImage} title={project.title} t={t} />
         <div className="projects-card-controls">
           <span>{formatCount(activeImage + 1)} / {formatCount(count)}</span>
-          <button type="button" onClick={previous} aria-label={`Previous ${project.title} image`}><ChevronLeft size={15} /></button>
-          <button type="button" onClick={next} aria-label={`Next ${project.title} image`}><ChevronRight size={15} /></button>
+          <button type="button" onClick={previous} aria-label={`${t("Previous")} ${project.title}`}><ChevronLeft size={15} /></button>
+          <button type="button" onClick={next} aria-label={`${t("Next")} ${project.title}`}><ChevronRight size={15} /></button>
         </div>
       </div>
 
-      <div className="projects-card-thumbnails" aria-label={`${project.title} image gallery`}>
+      <div className="projects-card-thumbnails" aria-label={`${project.title} ${t("image gallery")}`}>
         {project.images.map((image, index) => (
           <button
             className={activeImage === index ? "active" : ""}
             key={image.src}
             type="button"
             onClick={() => setActiveImage(index)}
-            aria-label={`Show ${project.title} ${image.label}`}
+            aria-label={`${t("Show")} ${project.title} ${t(image.label)}`}
             aria-pressed={activeImage === index}
           >
-            <ReplaceableProjectImage image={image} title={project.title} compact />
+            <ReplaceableProjectImage image={image} title={project.title} compact t={t} />
           </button>
         ))}
       </div>
 
       <div className="projects-card-copy">
-        <span>{project.category}</span>
+        <span>{t(project.category)}</span>
         <h2>{project.title}</h2>
-        <h3>{project.subtitle}</h3>
-        <p>{project.description}</p>
+        <h3>{t(project.subtitle)}</h3>
+        <p>{t(project.description)}</p>
         <div className="projects-card-tech">
-          {project.tech.map((item) => <span key={item}>{item}</span>)}
+          {project.tech.map((item) => <span key={item}>{t(item)}</span>)}
         </div>
       </div>
     </article>
@@ -224,8 +235,13 @@ function ProjectIndexCard({ project }: { project: Project }) {
 }
 
 export default function ProjectsPage() {
+  const { language, setLanguage, t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
   const cursorAura = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.title = language === "th" ? "โปรเจกต์ทั้งหมด — Thithada Islam" : "All Projects — Thithada Islam";
+  }, [language]);
 
   useEffect(() => {
     const updateProgress = () => {
@@ -271,42 +287,45 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <main className="projects-page">
+    <main className="projects-page" data-language={language}>
       <div className="cursor-aura" ref={cursorAura} aria-hidden="true" />
       <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
 
-      <nav className="projects-page-nav" aria-label="Projects navigation">
-        <a className="monogram" href="/" aria-label="Back to homepage">TI<span>.</span></a>
-        <a href="/"><ArrowLeft size={15} /> Back home</a>
-        <a href="/resume_thithada.pdf" download>Résumé <Download size={15} /></a>
+      <nav className="projects-page-nav" aria-label={t("Projects navigation")}>
+        <a className="monogram" href="/" aria-label={t("Back to homepage")}>TI<span>.</span></a>
+        <a href="/"><ArrowLeft size={15} /> {t("Back home")}</a>
+        <div className="projects-nav-actions">
+          <LanguageToggle language={language} setLanguage={setLanguage} />
+          <a href="/resume_thithada.pdf" download>{t("Résumé")} <Download size={15} /></a>
+        </div>
       </nav>
 
       <header className="projects-index-hero" id="top">
-        <div className="projects-hero-label"><Code2 size={15} /> PROJECT INDEX / 2026</div>
-        <h1>All work.<br /><em>One evolving system.</em></h1>
+        <div className="projects-hero-label"><Code2 size={15} /> {t("PROJECT INDEX / 2026")}</div>
+        <h1>{t("All work.")}<br /><em>{t("One evolving system.")}</em></h1>
         <div className="projects-hero-bottom">
-          <p>Selected products, engineering tools, and experiments—each with room for a flexible visual story rather than a fixed screenshot count.</p>
+          <p>{t("Selected products, engineering tools, and experiments—each with room for a flexible visual story rather than a fixed screenshot count.")}</p>
           <div>
-            <span><strong>07</strong>Projects</span>
-            <span><strong>03</strong>Featured</span>
-            <span><strong>04</strong>To document</span>
+            <span><strong>07</strong>{t("Projects")}</span>
+            <span><strong>03</strong>{t("Featured")}</span>
+            <span><strong>04</strong>{t("To document")}</span>
           </div>
         </div>
       </header>
 
-      <section className="projects-index-grid" aria-label="All projects">
-        {allProjects.map((project) => <ProjectIndexCard project={project} key={project.slug} />)}
+      <section className="projects-index-grid" aria-label={t("All projects")}>
+        {allProjects.map((project) => <ProjectIndexCard project={project} t={t} key={project.slug} />)}
       </section>
 
       <section className="projects-page-cta">
-        <span>HAVE A PROJECT IN MIND?</span>
-        <a href="mailto:thithadatomas@gmail.com">Let’s build the next one.<ArrowUpRight /></a>
+        <span>{t("HAVE A PROJECT IN MIND?")}</span>
+        <a href="mailto:thithadatomas@gmail.com">{t("Let’s build the next one.")}<ArrowUpRight /></a>
       </section>
 
       <footer className="projects-page-footer">
         <span>THITHADA ISLAM © 2026</span>
-        <a href="/">HOME</a>
-        <a href="#top">BACK TO TOP ↑</a>
+        <a href="/">{t("HOME")}</a>
+        <a href="#top">{t("BACK TO TOP ↑")}</a>
       </footer>
     </main>
   );

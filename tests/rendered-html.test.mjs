@@ -72,3 +72,33 @@ test("keeps project galleries variable-length and responsive", async () => {
   assert.match(css, /\.gallery-thumbnails[^}]*flex-direction:row[^}]*overflow-x:auto/);
   assert.match(imageGuide, /supports a variable number of images/i);
 });
+
+test("provides a persistent English and Thai language switch", async () => {
+  const [home, projectsPage, i18n, css] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/projects/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/i18n.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(home, /LanguageToggle/);
+  assert.match(projectsPage, /LanguageToggle/);
+  assert.match(i18n, /thithada-portfolio-language/);
+  assert.match(i18n, /window\.localStorage\.setItem/);
+  assert.match(i18n, /document\.documentElement\.lang = language/);
+  assert.match(i18n, /โปรเจกต์ทั้งหมด/);
+  assert.match(home, /<h1>[\s\S]*t\("Building digital"\)/);
+  assert.match(projectsPage, /<h1>\{t\("All work\."\)\}/);
+  assert.match(i18n, /"Frontend": "Frontend"/);
+  assert.match(css, /\.language-toggle/);
+});
+
+test("protects content and decorative type from viewport clipping", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  assert.match(css, /body\s*\{[^}]*overflow-x:\s*clip/s);
+  assert.match(css, /\.hero\s*\{[^}]*overflow:\s*visible/s);
+  assert.match(css, /\.hero-copy\s*\{[^}]*min-width:\s*0/s);
+  assert.match(css, /\.hero\s*\{\s*grid-template-columns:minmax\(0,1fr\)/);
+  assert.match(css, /\.nav-resume,.projects-nav-actions > a\s*\{[^}]*font-size:\s*0/s);
+});
