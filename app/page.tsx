@@ -3,7 +3,6 @@
 import {
   ArrowDown,
   ArrowUpRight,
-  BriefcaseBusiness,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -14,14 +13,11 @@ import {
   ExternalLink,
   GitBranch,
   ImageIcon,
-  Languages,
   Mail,
   MapPin,
-  MonitorUp,
   Phone,
   Plus,
   Sparkles,
-  Target,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { LanguageToggle, useLanguage } from "./i18n";
@@ -115,21 +111,6 @@ const additionalProjects = [
   { number: "05", title: "autocar", visibility: "Public" },
   { number: "06", title: "Project-nutrition", visibility: "Private" },
   { number: "07", title: "BackTest", visibility: "Add visibility" },
-];
-
-const beyondCode = [
-  {
-    title: "Photography",
-    text: "Finding structure, light, and small details in ordinary scenes.",
-  },
-  {
-    title: "Running",
-    text: "A quiet routine for consistency, patience, and a clear reset.",
-  },
-  {
-    title: "Music",
-    text: "Space away from the screen to recharge and notice new ideas.",
-  },
 ];
 
 const skillGroups = [
@@ -428,18 +409,6 @@ export default function Home() {
             <p>{t("The projects I enjoy most live where software meets the real world: health assessment sensors, habit-forming product systems, and radio telescope operations.")}</p>
             <p>{t("I’m currently exploring practical ways to integrate AI into software development and product experiences.")}</p>
           </div>
-          <div className="principles">
-            <span>{t("01 / Think in systems")}</span>
-            <span>{t("02 / Design for humans")}</span>
-            <span>{t("03 / Ship with intention")}</span>
-          </div>
-        </div>
-
-        <div className="career-brief" aria-label={t("Career preferences")}>
-          <div><Target size={19} /><span>{t("Target roles")}</span><strong>Frontend / Full-stack</strong></div>
-          <div><MonitorUp size={19} /><span>{t("Work mode")}</span><strong>{t("Remote / Hybrid")}</strong></div>
-          <div><BriefcaseBusiness size={19} /><span>{t("Availability")}</span><strong>{t("Open to discuss")}</strong></div>
-          <div><Languages size={19} /><span>{t("Languages")}</span><strong>{t("Thai · English")}</strong></div>
         </div>
       </section>
 
@@ -447,7 +416,6 @@ export default function Home() {
         <SectionLabel number="02">{t("Selected work")}</SectionLabel>
         <div className="work-heading">
           <h2>{t("Projects with")}<br /><em>{t("real-world signal.")}</em></h2>
-          <p>{t("From digital health assessments to radio telescope operations—building across interfaces, APIs, and data.")}</p>
         </div>
 
         <div className="projects">
@@ -525,7 +493,6 @@ export default function Home() {
             <span className="case-kicker">{t("CHECK PD · DEEP DIVE")}</span>
             <h2>{t("Beyond the screens.")}<br /><em>{t("Inside the thinking.")}</em></h2>
           </div>
-          <p>{t("A compact story recruiters can scan quickly. Replace the final outcome with validated product data when it becomes available.")}</p>
         </div>
 
         <div className="case-panel">
@@ -560,7 +527,6 @@ export default function Home() {
         <SectionLabel number="04">{t("Expertise")}</SectionLabel>
         <div className="expertise-heading">
           <h2>{t("A versatile stack.")}<br /><em>{t("One clear purpose.")}</em></h2>
-          <p>{t("Choosing the right tools to make ideas useful, maintainable, and ready to grow.")}</p>
         </div>
         <div className="skill-grid">
           {skillGroups.map((group, index) => (
@@ -570,30 +536,6 @@ export default function Home() {
               <div>{group.items.map((item) => <p key={item}>{item}</p>)}</div>
             </div>
           ))}
-        </div>
-
-        <div className="working-style">
-          <div>
-            <span>{t("WORKING STYLE")}</span>
-            <h3>{t("How I contribute beyond code.")}</h3>
-          </div>
-          <div className="working-tags">
-            {[
-              "Requirement breakdown",
-              "User-flow thinking",
-              "Figma handoff",
-              "Git workflow",
-              "API integration",
-              "Responsive UI",
-              "Frontend testing",
-              "AI-assisted development",
-            ].map((item) => <span key={item}>{t(item)}</span>)}
-          </div>
-          <div className="language-card">
-            <Languages size={22} />
-            <div><strong>{t("Thai")}</strong><span>{t("Native")}</span></div>
-            <div><strong>{t("English")}</strong><span>{t("Add proficiency level")}</span></div>
-          </div>
         </div>
       </section>
 
@@ -617,23 +559,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <aside className="beyond-code scroll-reveal" aria-labelledby="beyond-code-title" data-reveal>
-        <div className="beyond-code-heading">
-          <span>{t("06 / BEYOND CODE")}</span>
-          <h2 id="beyond-code-title">{t("A little more")} <em>{t("human.")}</em></h2>
-          <small>{t("Editable starter content")}</small>
-        </div>
-        <div className="beyond-code-list">
-          {beyondCode.map((item, index) => (
-            <article key={item.title}>
-              <span>0{index + 1}</span>
-              <h3>{t(item.title)}</h3>
-              <p>{t(item.text)}</p>
-            </article>
-          ))}
-        </div>
-      </aside>
 
       <section className="contact section-shell scroll-reveal" id="contact" data-reveal>
         <div className="contact-noise" aria-hidden="true" />

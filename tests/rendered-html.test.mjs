@@ -36,8 +36,8 @@ test("server-renders the portfolio content", async () => {
   assert.match(html, /autocar/);
   assert.match(html, /Project-nutrition/);
   assert.match(html, /BackTest/);
-  assert.match(html, /BEYOND CODE/);
-  assert.match(html, /Editable starter content/);
+  assert.doesNotMatch(html, /BEYOND CODE/);
+  assert.doesNotMatch(html, /Editable starter content/);
   assert.doesNotMatch(html, /codex-preview|Building your site/);
 });
 
@@ -99,6 +99,27 @@ test("protects content and decorative type from viewport clipping", async () => 
   assert.match(css, /body\s*\{[^}]*overflow-x:\s*clip/s);
   assert.match(css, /\.hero\s*\{[^}]*overflow:\s*visible/s);
   assert.match(css, /\.hero-copy\s*\{[^}]*min-width:\s*0/s);
+  assert.match(css, /--frame-max:\s*1280px/);
+  assert.match(css, /\.hero-copy\s*\{[^}]*padding:[^;}]*var\(--hero-inner\)/s);
+  assert.match(css, /\.section-shell\s*\{[^}]*var\(--frame-max\)/s);
   assert.match(css, /\.hero\s*\{\s*grid-template-columns:minmax\(0,1fr\)/);
   assert.match(css, /\.nav-resume,.projects-nav-actions > a\s*\{[^}]*font-size:\s*0/s);
+});
+
+test("keeps removed profile sections archived instead of rendered", async () => {
+  const [page, archive] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../delete.md", import.meta.url), "utf8"),
+  ]);
+
+  assert.doesNotMatch(page, /className="principles"/);
+  assert.doesNotMatch(page, /className="career-brief"/);
+  assert.doesNotMatch(page, /className="working-style"/);
+  assert.doesNotMatch(page, /className="beyond-code/);
+  assert.doesNotMatch(page, /Choosing the right tools to make ideas useful/);
+  assert.doesNotMatch(page, /From digital health assessments to radio telescope operations/);
+  assert.doesNotMatch(page, /A compact story recruiters can scan quickly/);
+  assert.match(archive, /01 \/ Think in systems/);
+  assert.match(archive, /Target roles/);
+  assert.match(archive, /How I contribute beyond code/);
 });

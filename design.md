@@ -64,8 +64,9 @@
 
 ## 5. Layout & Spacing
 
-- Desktop content width สูงสุดประมาณ `1360px`
-- ระยะขอบ desktop `24–48px` ขึ้นกับ viewport
+- Desktop content width สูงสุด `1280px` และจัดกึ่งกลาง viewport
+- กรอบเนื้อหาหลักมีระยะขอบอย่างน้อย `24px` ทุกขนาดหน้าจอ
+- Hero มี inner padding เพิ่มอีก `14–24px` เพื่อให้หัวข้อใหญ่ ตัวเอียง และปุ่มไม่แตะกรอบตกแต่ง
 - Section spacing desktop ประมาณ `140px`
 - ใช้เส้น 1px และ grid เพื่อจัดระเบียบแทน card เงาจำนวนมาก
 - Layout หลักเป็น asymmetric grid เพื่อให้ดู editorial และมีเอกลักษณ์
@@ -79,6 +80,8 @@ Breakpoints ปัจจุบัน:
 ## 6. Hero Direction
 
 Hero ด้านขวา **ไม่ใช้รูปโปรไฟล์** ตามการตัดสินใจล่าสุด เพราะไม่มีภาพที่เหมาะสม
+
+เส้นสี่เหลี่ยมจาง ๆ ด้านหลัง Hero คือ **Engineering grid** ขนาด `72px` ใช้เป็นพื้นผิวตกแต่งเพื่อสื่อถึงระบบและงานวิศวกรรม ไม่ใช่ตารางข้อมูล โดยใช้ opacity ต่ำและค่อย ๆ จางไปทางขวา
 
 ใช้ orbital engineering system แทน ประกอบด้วย:
 
@@ -174,7 +177,7 @@ Motion ของเว็บมีหน้าที่อธิบาย hierar
 
 ### 8.7 Edge safety / ขอบจอ
 
-- Container หลักเว้นขอบ 24px บน desktop และ 16px บน mobile
+- Container หลักเว้นขอบอย่างน้อย 24px ทั้ง desktop และ mobile และ Hero มี inner padding เพิ่มอีกชั้น
 - Hero ไม่ใช้ `overflow: hidden` เพราะจะตัดส่วน overhang ของตัวอักษร serif/italic
 - ใช้ `minmax(0, 1fr)` และ `min-width: 0` กับ Grid child เพื่อให้ข้อความยาวหดและตัดบรรทัดภายใน Container
 - `body` ใช้ `overflow-x: clip` ป้องกัน decorative element สร้าง horizontal scrollbar โดยไม่ตัด glyph ที่ขอบ Container
@@ -267,29 +270,6 @@ type Project = {
 - หน้า `/projects` ใช้ thumbnail rail แนวนอนในการ์ดแต่ละใบ จำนวนรูปของแต่ละโปรเจกต์ไม่จำเป็นต้องเท่ากัน
 - หาก section ใดไม่ช่วยให้ recruiter ตัดสินใจเรียกสัมภาษณ์ ควรย้ายไป detail page หรือตัดออก
 
-### Beyond code / งานอดิเรก
-
-ควรเพิ่มเพื่อให้คนจดจำบุคลิกได้ แต่ไม่ควรทำเป็น section ใหญ่ในตอนนี้
-
-รูปแบบที่แนะนำ:
-
-- ใช้แถบเล็กชื่อ `Beyond code` ใกล้ Journey หรือก่อน Contact
-- เลือกงานอดิเรกจริงไม่เกิน 3 อย่าง
-- เขียนเป็นคำสั้นพร้อมเหตุผลหนึ่งบรรทัด ไม่ใช้ skill bar
-- เลือกสิ่งที่ช่วยเปิดบทสนทนาในการสัมภาษณ์ หรือสะท้อนความอยากรู้อยากเห็น วินัย และวิธีคิด
-- ข้อความ Photography, Running และ Music ในเวอร์ชันนี้เป็น starter content ที่ติดป้าย `Editable starter content` ต้องยืนยันหรือเปลี่ยนเป็นงานอดิเรกจริงก่อนใช้สมัครงาน
-
-ตัวอย่างโครงสร้างข้อความ:
-
-```text
-Beyond code
-Photography — I enjoy finding structure in ordinary scenes.
-Running — A quiet system for consistency and reset.
-Music — [personal detail in one sentence].
-```
-
-แถบนี้ถูกเพิ่มก่อน Contact โดยตั้งใจให้มีขนาดเล็กและไม่แข่งขันกับ Journey หรือ Selected work
-
 ## 10. Content Rules
 
 - ทุกโปรเจกต์ควรตอบให้ได้: ปัญหาคืออะไร, เรารับผิดชอบอะไร, ทำอย่างไร, ผลลัพธ์คืออะไร
@@ -307,13 +287,13 @@ Components หลัก:
 - `HeroSystem` — orbital signature
 - `ProjectGallery` — main image + scrollable variable-length thumbnails + controls
 - `ProjectArchive` — รายชื่อโปรเจกต์เพิ่มเติมแบบกระชับ ไม่แย่งความเด่นจาก featured work
-- `BeyondCode` — แถบงานอดิเรก 2–3 รายการก่อน Contact
 - `LanguageToggle` — ตัวเลือก EN / TH ที่ใช้ร่วมกันทุก route และจำค่าบนอุปกรณ์
 - `ProjectMetrics` — ตัวเลข impact สามช่อง
 - `CaseStudyTabs` — Problem / My role / Challenge / Result
 - `SkillGrid` — สี่หมวดทักษะ
-- `CareerBrief` — target role, work mode, availability, languages
 - `ContactStatement` — CTA ขนาดใหญ่บน Cobalt
+
+ส่วน `Principles`, `CareerBrief`, `WorkingStyle`, `BeyondCode` และ supporting copy ที่ไม่จำเป็นถูกนำออกจากหน้าเพื่อให้เนื้อหากระชับขึ้น โดยเก็บต้นฉบับและแนวทางคืนค่าไว้ใน `delete.md`
 
 กติกา component:
 
