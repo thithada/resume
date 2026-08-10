@@ -329,3 +329,17 @@ Case study นี้สามารถนำกลับมาใช้ใน de
 - repair-report: `XX Reports handled`, `XX% Time reduced`, `XX Active users`
 
 เหตุผลในการนำออกคือช่วยลด visual noise และไม่แสดงตัวเลข placeholder ที่ยังไม่มีข้อมูลยืนยัน
+
+## Removed project impact bullets and screenshot prompt
+
+นำรายการ impact แบบ 3 ข้อออกจาก project cards ทั้ง 7 รายการ เพื่อรอรายละเอียดจริงจากเจ้าของโปรเจกต์ และนำ badge `Replace project screenshots` ออกเนื่องจากมีรูปจริงใน gallery แล้ว
+
+รายการเดิมที่เก็บไว้สำหรับนำกลับมาใช้ภายหลัง:
+
+- Check PD: `Built five assessment modules using audio, motion, and touch interactions.` / `Created responsive registration, assessment, history, and results journeys.` / `Developed reusable components, persistent forms, animations, and frontend tests.`
+- Gen-H: `Delivered quest, badge, notification, Hall of Fame, and leaderboard features.` / `Implemented server logic, database schemas, seeding, progress tracking, and image submissions.` / `Integrated LINE LIFF registration and session flows across a responsive system.`
+- NashGUI: `Translated Figma designs into responsive React interfaces.` / `Integrated authenticated FastAPI endpoints and structured frontend state flows.` / `Containerized application services with Docker for consistent environments.`
+- Aurum: `Add the backtesting logic you developed.` / `Add a data or performance challenge.` / `Add the result or insight produced.`
+- Project-nutrition: `Add the nutrition workflow you implemented.` / `Add an important product or data decision.` / `Add the strongest project result.`
+- Autocar: `Add the user or business problem.` / `Add the feature you owned.` / `Add the final outcome or learning.`
+- repair-report: `Add the main problem you solved.` / `Add your strongest technical decision.` / `Add a result, lesson, or measurable outcome.`

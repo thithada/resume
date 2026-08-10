@@ -49,9 +49,10 @@ test("server-renders the portfolio content", async () => {
 });
 
 test("keeps all seven projects on the single-page portfolio", async () => {
-  const [home, imageConfig, entry, vercel] = await Promise.all([
+  const [home, imageConfig, css, entry, vercel] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/project-images.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../src/main.tsx", import.meta.url), "utf8"),
     readFile(new URL("../vercel.json", import.meta.url), "utf8"),
   ]);
@@ -66,14 +67,31 @@ test("keeps all seven projects on the single-page portfolio", async () => {
   }
   assert.match(home, /projects\.map/);
   assert.match(home, /ProjectGallery projectTitle=\{project\.title\}/);
+  assert.match(home, /naturalHeight > event\.currentTarget\.naturalWidth \* 1\.1/);
+  assert.match(css, /\.replaceable-image\.portrait-frame[^}]*radial-gradient/);
+  assert.match(css, /\.replaceable-image\.portrait-frame img\.loaded[^}]*object-fit:contain/);
   assert.doesNotMatch(home, /floating-tag|AI curious|UX minded|07 projects/);
   assert.doesNotMatch(home, /project-metrics|metric-placeholder|metrics:/);
+  assert.doesNotMatch(home, /impact:|project\.impact|Replace project screenshots/);
+  assert.match(home, /title: "Project-nutrition"[\s\S]*?role: "Full-stack Developer · Team project"[\s\S]*?period: "2025"/);
+  assert.match(home, /title: "Autocar"[\s\S]*?role: "Full-stack Developer · Team project"[\s\S]*?period: "2024 — 2025"/);
+  assert.match(home, /title: "repair-report"[\s\S]*?role: "Full-stack Developer · Team project"[\s\S]*?period: "2024"/);
   assert.match(home, /className="work section-shell dark-section" id="work"/);
   assert.doesNotMatch(home, /className="work section-shell dark-section scroll-reveal"/);
-  assert.match(imageConfig, /projects\/aurum\/results\.webp/);
-  assert.match(imageConfig, /projects\/project-nutrition\/mobile\.webp/);
-  assert.match(imageConfig, /projects\/autocar\/detail\.webp/);
-  assert.match(imageConfig, /projects\/repair-report\/responsive\.webp/);
+  assert.match(imageConfig, /projects\/aurum\/aurum6\.png/);
+  assert.match(imageConfig, /projects\/project-nutrition\/project-nutrition6\.png/);
+  assert.match(imageConfig, /projects\/autocar\/autocar5\.png/);
+  assert.match(imageConfig, /projects\/repair-report\/repair-report3\.png/);
+  const configuredImagePaths = [...imageConfig.matchAll(/src: "(\/images\/projects\/[^"]+)"/g)].map((match) => match[1]);
+  assert.equal(configuredImagePaths.length, 38);
+  assert.ok(
+    configuredImagePaths.every((imagePath) => {
+      const match = imagePath.match(/\/projects\/([^/]+)\/([^/]+)\.png$/);
+      return match && match[2] === `${match[1]}${Number.parseInt(match[2].slice(match[1].length), 10)}`;
+    }),
+    "project image filenames should use the folder name followed by a number",
+  );
+  await Promise.all(configuredImagePaths.map((imagePath) => access(new URL(`../public${imagePath}`, import.meta.url))));
   assert.doesNotMatch(`${home}\n${imageConfig}`, /BackTest|backtest-/);
   assert.doesNotMatch(home, /href="\/projects|Explore all projects/);
   assert.doesNotMatch(entry, /ProjectsPage|\/projects/);

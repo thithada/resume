@@ -109,8 +109,10 @@ Gallery behavior:
 - รูปที่เลือกใช้ Acid Lime เป็น active state
 - รูปจริง fade in และขยายเล็กน้อยเมื่อ hover
 - หากยังไม่มีรูป จะแสดง premium technical placeholder พร้อมชื่อไฟล์ที่ต้องใส่
+- ระบบตรวจ `naturalWidth` / `naturalHeight` อัตโนมัติ; รูปแนวตั้งจาก LINE/mobile ใช้ `object-fit: contain` ภายใน portrait frame พื้น Ink + Engineering grid และเงาบาง ๆ เพื่อไม่ให้หน้าจอโทรศัพท์ถูก crop
+- ภาพแนวนอนยังใช้ `object-fit: cover` และเต็มกรอบตามเดิม
 
-รูปของแต่ละโปรเจกต์แยกไว้ใน `public/images/projects/<project-name>/` และรายชื่อไฟล์อยู่ใน `public/images/README.md`
+รูปของแต่ละโปรเจกต์แยกไว้ใน `public/images/projects/<project-name>/` ใช้ชื่อโฟลเดอร์ตามด้วยลำดับ เช่น `autocar1.png`, `autocar2.png` และดูรายชื่อทั้งหมดได้ใน `public/images/README.md`
 
 ข้อกำหนดรูป:
 
@@ -198,7 +200,8 @@ Home
 - ใช้หัวข้อ `SELECTED WORK` และ `Projects with real-world signal.`
 - โปรเจกต์ทั้ง 7 รายการมีน้ำหนักเท่ากันในรูปแบบ full-width project card ไม่มีการแบ่ง 3 โปรเจกต์หลัก + 4 โปรเจกต์ย่อย
 - ลำดับหลัก: `01 Check PD`, `02 Gen-H: Let’s Move`, `03 NashGUI`, `04 Aurum`, `05 Project-nutrition`, `06 Autocar`, `07 repair-report`
-- ทุกการ์ดแสดง gallery หลายรูป, ชื่อ, subtitle, role, period, status, description, impact และ tech stack โดยไม่แสดง metrics grid
+- ทุกการ์ดแสดง gallery หลายรูป, ชื่อ, subtitle, role, period, status, description และ tech stack โดยไม่แสดง impact bullet list หรือ metrics grid
+- ไม่แสดง badge `Replace project screenshots` เมื่อมีรูปจริงแล้ว
 - จำนวนรูปของแต่ละโปรเจกต์ยืดหยุ่นได้ ไม่บังคับให้เท่ากัน และ thumbnail rail ต้อง scroll ได้เมื่อรูปมีจำนวนมาก
 - Container ของ Selected Work ห้ามใช้ `scroll-reveal` เพราะความสูงหลาย viewport จะทำให้ IntersectionObserver ไม่ถึง threshold; ใช้ reveal เฉพาะการ์ดแต่ละใบ
 - ไม่มีหน้า `/projects`; เนื้อหาโปรเจกต์ทั้งหมดอยู่หน้าแรก

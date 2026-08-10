@@ -32,7 +32,6 @@ const projects = [
     status: "In progress",
     images: projectImages["check-pd"],
     description: "A mobile-first health assessment experience that turns complex sensor interactions into an approachable flow.",
-    impact: ["Built five assessment modules using audio, motion, and touch interactions.", "Created responsive registration, assessment, history, and results journeys.", "Developed reusable components, persistent forms, animations, and frontend tests."],
     tech: ["React", "TypeScript", "LINE LIFF", "Web APIs"],
   },
   {
@@ -44,7 +43,6 @@ const projects = [
     status: "Live product",
     images: projectImages["gen-h"],
     description: "A gamified platform that encourages healthy habits through daily quests, progress tracking, badges, and competitive leaderboards.",
-    impact: ["Delivered quest, badge, notification, Hall of Fame, and leaderboard features.", "Implemented server logic, database schemas, seeding, progress tracking, and image submissions.", "Integrated LINE LIFF registration and session flows across a responsive system."],
     tech: ["Next.js", "React", "Prisma", "PostgreSQL", "LINE LIFF"],
   },
   {
@@ -56,7 +54,6 @@ const projects = [
     status: "Completed",
     images: projectImages.nashgui,
     description: "A web application for generating and managing command sets used to control radio telescope equipment.",
-    impact: ["Translated Figma designs into responsive React interfaces.", "Integrated authenticated FastAPI endpoints and structured frontend state flows.", "Containerized application services with Docker for consistent environments."],
     tech: ["React", "FastAPI", "MariaDB", "Docker"],
   },
   {
@@ -68,43 +65,39 @@ const projects = [
     status: "Add visibility",
     images: projectImages.aurum,
     description: "Replace this draft with the strategy being tested, the data pipeline, and how users interpret the results.",
-    impact: ["Add the backtesting logic you developed.", "Add a data or performance challenge.", "Add the result or insight produced."],
     tech: ["Add language", "Add data source", "Add framework"],
   },
   {
     number: "05",
     title: "Project-nutrition",
-    subtitle: "Nutrition tracking product · Details to complete",
-    role: "Add your role · Portfolio draft",
-    period: "Add period",
+    subtitle: "Nutrition tracking product · School team project",
+    role: "Full-stack Developer · Team project",
+    period: "2025",
     status: "Private",
     images: projectImages["project-nutrition"],
     description: "Replace this draft with the nutrition problem, the target users, and the experience or system you designed.",
-    impact: ["Add the nutrition workflow you implemented.", "Add an important product or data decision.", "Add the strongest project result."],
     tech: ["Add stack", "Add database", "Add integration"],
   },
   {
     number: "06",
     title: "Autocar",
-    subtitle: "Automotive project · Details to complete",
-    role: "Add your role · Portfolio draft",
-    period: "Add period",
+    subtitle: "Automotive project · School team project",
+    role: "Full-stack Developer · Team project",
+    period: "2024 — 2025",
     status: "Public",
     images: projectImages.autocar,
     description: "Replace this draft with the project context, the automotive workflow, and the part of the product you built.",
-    impact: ["Add the user or business problem.", "Add the feature you owned.", "Add the final outcome or learning."],
     tech: ["Add stack", "Add API", "Add deployment"],
   },
   {
     number: "07",
     title: "repair-report",
-    subtitle: "Repair reporting workflow",
-    role: "Add your role · Portfolio draft",
-    period: "Add period",
+    subtitle: "Repair reporting workflow · School team project",
+    role: "Full-stack Developer · Team project",
+    period: "2024",
     status: "Public",
     images: projectImages["repair-report"],
     description: "Replace this draft with the repair problem, the users involved, and how your solution improves the reporting process.",
-    impact: ["Add the main problem you solved.", "Add your strongest technical decision.", "Add a result, lesson, or measurable outcome."],
     tech: ["Add stack", "Add database", "Add deployment"],
   },
 ];
@@ -127,9 +120,10 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
 
 function ReplaceableImage({ src, alt, label, size }: { src: string; alt: string; label: string; size: string }) {
   const [loaded, setLoaded] = useState(false);
+  const [portrait, setPortrait] = useState(false);
 
   return (
-    <div className="replaceable-image">
+    <div className={`replaceable-image ${portrait ? "portrait-frame" : ""}`}>
       <div className="image-grid" aria-hidden="true" />
       <div className="image-placeholder">
         <ImageIcon size={32} />
@@ -138,7 +132,19 @@ function ReplaceableImage({ src, alt, label, size }: { src: string; alt: string;
         <small>{src}</small>
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className={loaded ? "loaded" : ""} src={src} alt={alt} onLoad={() => setLoaded(true)} onError={() => setLoaded(false)} />
+      <img
+        className={loaded ? "loaded" : ""}
+        src={src}
+        alt={alt}
+        onLoad={(event) => {
+          setLoaded(true);
+          setPortrait(event.currentTarget.naturalHeight > event.currentTarget.naturalWidth * 1.1);
+        }}
+        onError={() => {
+          setLoaded(false);
+          setPortrait(false);
+        }}
+      />
       <span className="replace-tag"><Plus size={12} /> Replace image</span>
     </div>
   );
@@ -359,13 +365,9 @@ export default function Home() {
               </div>
 
               <p className="project-description">{t(project.description)}</p>
-              <ul>
-                {project.impact.map((item) => <li key={item}><ChevronRight size={15} />{t(item)}</li>)}
-              </ul>
               <div className="project-links" aria-label={`${project.title} ${t("links")}`}>
                 <span><ExternalLink size={14} /> {t("Add live demo")}</span>
                 <span><Code2 size={14} /> {t("Add repository")}</span>
-                <span><ImageIcon size={14} /> {t("Replace project screenshots")}</span>
               </div>
               <div className="tech-list">
                 {project.tech.map((tech) => <span key={tech}>{t(tech)}</span>)}
