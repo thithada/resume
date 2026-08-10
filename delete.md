@@ -239,3 +239,93 @@ A compact story recruiters can scan quickly. Replace the final outcome with vali
 Expertise
 Choosing the right tools to make ideas useful, maintainable, and ready to grow.
 ```
+
+## 6. Thai language system
+
+ระบบภาษาไทยถูกนำออกเมื่อวันที่ 10 สิงหาคม 2026 เพื่อให้เว็บไซต์เป็นภาษาอังกฤษอย่างเดียว สิ่งที่นำออกประกอบด้วย:
+
+- ปุ่ม `EN / TH` ใน Navigation ของหน้าแรกและหน้า `/projects`
+- Translation dictionary ภาษาไทยใน `app/i18n.tsx`
+- React state และ `useLanguage()` สำหรับสลับภาษา
+- การจำภาษาด้วย key `thithada-portfolio-language` ใน `localStorage`
+- การเปลี่ยนค่า `lang` และชื่อหน้าอัตโนมัติเมื่อเลือกภาษาไทย
+- CSS เฉพาะ `.language-toggle` และ `[lang="th"]`
+
+โครงสร้างเดิมของตัวเลือกภาษา:
+
+```tsx
+<LanguageToggle language={language} setLanguage={setLanguage} />
+```
+
+```tsx
+export type Language = "en" | "th";
+
+const STORAGE_KEY = "thithada-portfolio-language";
+
+const t = (english: string) =>
+  language === "th" ? thaiTranslations[english] ?? english : english;
+```
+
+Translation dictionary ฉบับเต็มยังเรียกคืนได้จากประวัติ Git ของ `app/i18n.tsx` หากต้องการนำระบบสองภาษากลับมาในอนาคต
+
+## 7. Featured case study — Beyond the screens
+
+Section `Beyond the screens. Inside the thinking.` ถูกนำออกจากหน้าแรกทั้งชุด รวมลิงก์ Case study ใน Navigation และระบบ tabs แบบ interactive
+
+ข้อมูลเดิมทั้ง 4 ขั้น:
+
+```text
+Problem
+Make complex screening feel human.
+The experience needed to capture meaningful audio, motion, and touch signals without making a health assessment feel technical or intimidating on a phone.
+
+My role
+Turn requirements into a product system.
+I translated provided flows and designs into reusable React architecture across registration, settings, five assessments, history, and result journeys.
+
+Challenge
+Sensors, state, and mobile interaction.
+The work combined browser microphone and motion access, persistent incomplete answers, responsive components, swipe navigation, animations, and testable frontend behavior.
+
+Result
+Five modules ready for the next phase.
+The frontend assessment system is in place. The next phase is backend development and machine-learning analysis. Add validated user and testing outcomes here later.
+```
+
+Case study นี้สามารถนำกลับมาใช้ใน detail page ของ Check PD ภายหลังได้ โดย CSS เดิมใช้พื้น Acid Lime, panel สี Ink, tabs 4 ขั้น และ signal bars แบบเคลื่อนไหว
+
+## 8. Dedicated `/projects` page
+
+หน้า All projects ถูกนำออกเมื่อผู้ใช้เลือกให้เว็บไซต์กลับมาเป็นหน้าเดียว โดยนำองค์ประกอบต่อไปนี้ออก:
+
+- Route `app/projects/page.tsx`
+- หน้า Project index พื้น Ink และ Hero “All work. One evolving system.”
+- การ์ดรายละเอียดของโปรเจกต์ทั้ง 7 รายการ
+- Gallery รูปแบบหลายรูป, thumbnail rail และปุ่ม Previous/Next
+- Project descriptions, Tech stack และ image placeholders บนหน้าแยก
+- CTA “Let’s build the next one.” และ Footer ของหน้า Projects
+- การเลือกหน้าใน `src/main.tsx`
+- Vercel rewrite สำหรับ `/projects`
+- เมนู “All projects”, ปุ่ม “Explore all projects” และลิงก์จากแถว Project archive
+
+ข้อมูลรายละเอียดที่เคยอยู่บนหน้า `/projects` รวมถึงรายชื่อไฟล์รูปยังเรียกคืนได้จากประวัติ Git ของ `app/projects/page.tsx` ส่วนรูปแบบเดิมเรียกคืนได้จากประวัติของ `app/globals.css`
+
+## 9. Hero floating tags and project metrics
+
+นำป้ายลอยรอบ Hero orbital graphic ออกทั้งหมด 3 รายการ:
+
+- `07 projects`
+- `AI curious`
+- `UX minded`
+
+นำ Metrics grid ออกจาก project cards ทั้ง 7 รายการ รวม CSS ของ `project-metrics` และ `metric-placeholder` โดยข้อมูลเดิมที่เก็บไว้มีดังนี้:
+
+- Check PD: `05 Assessment modules`, `XX Users or test cases`, `XX% Completion improvement`
+- Gen-H: `05+ Core feature systems`, `XX Daily active users`, `XX% Quest completion rate`
+- NashGUI: `01 Telescope workflow`, `XX Commands generated`, `XXh Operator time saved`
+- Aurum: `XX Strategies tested`, `XX Data points`, `XX% Performance result`
+- Project-nutrition: `XX Tracking features`, `XX Nutrition records`, `XX% Goal completion`
+- Autocar: `XX Core features`, `XX Data records`, `XX% Process improvement`
+- repair-report: `XX Reports handled`, `XX% Time reduced`, `XX Active users`
+
+เหตุผลในการนำออกคือช่วยลด visual noise และไม่แสดงตัวเลข placeholder ที่ยังไม่มีข้อมูลยืนยัน

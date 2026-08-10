@@ -88,29 +88,29 @@ Hero ด้านขวา **ไม่ใช้รูปโปรไฟล์** 
 - วงโคจรสองชั้น
 - จุด signal สี Cobalt และ Acid Lime
 - Core text: `PRODUCT × ENGINEERING`
-- Floating tags: `AI curious`, `UX minded`, `03 shipped products`
 
-เหตุผล: ภาพระบบนี้เข้ากับตัวตน software engineer มากกว่า placeholder รูปบุคคล และกลายเป็น visual signature ของเว็บ
+ไม่มี floating tags รอบวงโคจร เพื่อให้ visual signature สะอาดและรักษา focus ไว้ที่ Core
 
 ## 7. Project Image System
 
-แต่ละ featured project มี gallery จำนวน 4 รูป:
+แต่ละ featured project รองรับจำนวนรูปไม่เท่ากัน โดย starter ปัจจุบันมีตั้งแต่ 2–6 รูป:
 
 1. Cover — ภาพรวมที่แข็งแรงที่สุด
 2. Core interaction — feature หรือ interaction สำคัญ
 3. Result / secondary feature — ผลลัพธ์หรือหน้ารอง
 4. Flow / detail — ลำดับการใช้งานหรือรายละเอียดระบบ
+5. Supporting screens — เพิ่มเท่าที่จำเป็นต่อเรื่องราวของโปรเจกต์
 
 Gallery behavior:
 
 - รูปหลักอัตราส่วน 16:9 บน desktop และ 4:3 บน mobile
-- Thumbnail 4 รูปอยู่ด้านขวาบน desktop และเรียงแนวนอนบน mobile
-- มี Previous / Next controls และตัวนับ `01 / 04`
+- Thumbnail rail อยู่ด้านขวาบน desktop และเรียงแนวนอนบน mobile พร้อม scroll เมื่อจำนวนรูปเกินพื้นที่
+- มี Previous / Next controls และตัวนับตามจำนวนจริง เช่น `01 / 06`
 - รูปที่เลือกใช้ Acid Lime เป็น active state
 - รูปจริง fade in และขยายเล็กน้อยเมื่อ hover
 - หากยังไม่มีรูป จะแสดง premium technical placeholder พร้อมชื่อไฟล์ที่ต้องใส่
 
-ชื่อไฟล์และรายละเอียดอยู่ใน `public/images/README.md`
+รูปของแต่ละโปรเจกต์แยกไว้ใน `public/images/projects/<project-name>/` และรายชื่อไฟล์อยู่ใน `public/images/README.md`
 
 ข้อกำหนดรูป:
 
@@ -149,20 +149,16 @@ Motion ของเว็บมีหน้าที่อธิบาย hierar
 - ใช้ easing `cubic-bezier(.2,.75,.2,1)`
 - แสดงเพียงครั้งแรกเพื่อไม่ให้รบกวนเวลาเลื่อนกลับ
 
-### 8.4 Language switch
+### 8.4 Language
 
-- มีปุ่ม `EN / TH` แบบ segmented control ใน Navigation ของหน้าแรกและหน้า `/projects`
-- English เป็นค่าเริ่มต้น ส่วนตัวเลือกของผู้ใช้บันทึกใน `localStorage`
-- เมื่อเปลี่ยนภาษา ค่า `lang` บน `<html>` และชื่อหน้าใน browser จะเปลี่ยนตาม
-- แปล Navigation, heading, body copy, project status, case study, Journey, Beyond code, CTA และ accessibility label
-- คงชื่อบุคคล ชื่อโปรเจกต์ ชื่อบริษัท และเทคโนโลยีเป็นภาษาเดิม
-- ภาษาไทยใช้ layout และ visual hierarchy เดียวกับภาษาอังกฤษ แต่ลด letter spacing และเพิ่ม line height ใน headline เพื่อให้อ่านง่าย
+- เว็บไซต์ใช้ภาษาอังกฤษเท่านั้น
+- ค่า `lang` บน `<html>` คงเป็น `en`
+- ไม่มี language switch, translation dictionary หรือการจำภาษาผ่าน `localStorage`
+- ชื่อบุคคล ชื่อโปรเจกต์ ชื่อบริษัท และเทคโนโลยีคงรูปแบบภาษาอังกฤษเดิม
 
 ### 8.5 Ambient motion
 
 - Hero orbit หมุนช้า 24–30 วินาที
-- Floating tags ขยับขึ้นลงระยะสั้น
-- Case-study signal bars เคลื่อนไหวเป็นคลื่น
 - Project underline และลูกศรตอบสนองต่อ hover
 - Gallery image zoom ไม่เกินประมาณ 2.5%
 
@@ -181,79 +177,33 @@ Motion ของเว็บมีหน้าที่อธิบาย hierar
 - Hero ไม่ใช้ `overflow: hidden` เพราะจะตัดส่วน overhang ของตัวอักษร serif/italic
 - ใช้ `minmax(0, 1fr)` และ `min-width: 0` กับ Grid child เพื่อให้ข้อความยาวหดและตัดบรรทัดภายใน Container
 - `body` ใช้ `overflow-x: clip` ป้องกัน decorative element สร้าง horizontal scrollbar โดยไม่ตัด glyph ที่ขอบ Container
-- บน mobile ปุ่ม Résumé เหลือไอคอน Download เพื่อให้ Language toggle และ Navigation ไม่ชนขอบ
-- Gallery และ Case-study tabs ที่ยาวใช้ scroll rail ภายใน Component แทนการดันความกว้างของหน้า
+- บน mobile ปุ่ม Resume เหลือไอคอน Download เพื่อไม่ให้ Navigation ชนขอบ
 
 ## 9. Content Architecture
 
-หน้าแรกควรทำหน้าที่เป็น **curated introduction** ไม่ควรนำทุกโปรเจกต์มาใส่จนยาวเกินไป
+หน้าแรกทำหน้าที่เป็น **curated introduction + complete project showcase** โดยแสดงโปรเจกต์หลักครบทั้ง 7 รายการ
 
-### Recommendation: แยก Projects ออกเป็นหน้าต่างหาก
-
-เมื่อมีโปรเจกต์รวมประมาณ 7–8 ชิ้น แนวทางที่แนะนำคือ:
+### Current structure: Single page
 
 ```text
 Home
 ├── Hero / Positioning
-├── Featured Projects 3 ชิ้น
-├── Featured Case Study 1 ชิ้น
+├── Selected Work / Full Project Cards 7 ชิ้น
 ├── Expertise / Journey
 └── Contact
-
-/projects
-├── All Projects
-├── Filter: Product / Frontend / Full-stack / Experiment
-└── Project cards พร้อมบทสรุปสั้น
-
-/projects/[slug]
-├── Overview
-├── Problem
-├── My Role
-├── Process & Constraints
-├── Gallery
-├── Technical Decisions
-├── Result / Metrics
-└── Reflection / Next step
 ```
 
-### Featured project selection
+### Homepage project policy
 
-หน้าแรกควรเลือก 3 โปรเจกต์ที่แสดงความกว้างของความสามารถ:
-
-1. Check PD — sensors, health flow, mobile interaction
-2. Gen-H — product systems, gamification, full-stack
-3. NashGUI — technical domain, API integration, deployment
-
-โปรเจกต์อื่นให้ไปอยู่หน้า `/projects` และเลือก 1–2 ชิ้นที่แข็งแรงที่สุดมาทำ detail case study
-
-### Project data model สำหรับอนาคต
-
-```ts
-type Project = {
-  slug: string;
-  title: string;
-  subtitle: string;
-  role: string;
-  period: string;
-  status: string;
-  featured: boolean;
-  category: string[];
-  description: string;
-  problem: string;
-  responsibility: string[];
-  challenges: string[];
-  solution: string[];
-  metrics: Array<{ value: string; label: string }>;
-  tech: string[];
-  images: Array<{ src: string; alt: string; caption?: string }>;
-  demoUrl?: string;
-  repositoryUrl?: string;
-};
-```
-
-หน้าแรกมี `Project archive` แบบกระชับสำหรับ repair-report, autocar, Project-nutrition และ BackTest พร้อมลิงก์ไปหน้า `/projects` ซึ่งรวมทั้ง 7 โปรเจกต์ หน้า index ใช้การ์ดสองคอลัมน์บน desktop และหนึ่งคอลัมน์บน mobile โดยแต่ละการ์ดมี gallery ที่จำนวนรูปเป็นอิสระต่อกัน
-
-หน้า `/projects` ใช้ Ink เป็นพื้นหลัก, Acid Lime เป็น signal และคง cursor aura แบบเดียวกับหน้าแรก เส้นทางนี้รองรับทั้ง vinext local development และ Vercel static build
+- ใช้หัวข้อ `SELECTED WORK` และ `Projects with real-world signal.`
+- โปรเจกต์ทั้ง 7 รายการมีน้ำหนักเท่ากันในรูปแบบ full-width project card ไม่มีการแบ่ง 3 โปรเจกต์หลัก + 4 โปรเจกต์ย่อย
+- ลำดับหลัก: `01 Check PD`, `02 Gen-H: Let’s Move`, `03 NashGUI`, `04 Aurum`, `05 Project-nutrition`, `06 Autocar`, `07 repair-report`
+- ทุกการ์ดแสดง gallery หลายรูป, ชื่อ, subtitle, role, period, status, description, impact และ tech stack โดยไม่แสดง metrics grid
+- จำนวนรูปของแต่ละโปรเจกต์ยืดหยุ่นได้ ไม่บังคับให้เท่ากัน และ thumbnail rail ต้อง scroll ได้เมื่อรูปมีจำนวนมาก
+- Container ของ Selected Work ห้ามใช้ `scroll-reveal` เพราะความสูงหลาย viewport จะทำให้ IntersectionObserver ไม่ถึง threshold; ใช้ reveal เฉพาะการ์ดแต่ละใบ
+- ไม่มีหน้า `/projects`; เนื้อหาโปรเจกต์ทั้งหมดอยู่หน้าแรก
+- ค่าที่ยังไม่มีข้อมูลจริงใช้ placeholder ที่มองออกชัดเจนและแก้ได้จาก project data ส่วนกลาง
+- Hero orbital graphic ไม่มี floating tags รอบวงกลม เพื่อให้ focal point สะอาดและไม่แย่งความสนใจจาก headline
 
 ### Complexity budget — ป้องกันเว็บดูแน่นหรือเละ
 
@@ -262,18 +212,16 @@ type Project = {
 กติกา:
 
 - หนึ่ง viewport ควรมี signature motion ที่เด่นเพียงหนึ่งอย่าง
-- หน้าแรกคงไว้ที่ featured projects 3 ชิ้น และ featured case study 1 ชิ้น
+- Project cards เป็นส่วนข้อมูลหลักของหน้า จึงไม่เพิ่ม featured case study ซ้ำอีกชั้น
 - Cursor aura, scroll reveal และ hero orbit เป็น motion หลักที่เพียงพอแล้ว
 - ไม่เพิ่ม particle background, custom cursor รูปทรงซับซ้อน, horizontal scroll หรือ 3D tilt พร้อมกัน
-- เมื่อใส่ข้อมูลจริง ต้องลบ placeholder link และ metrics ที่ไม่ใช้ ไม่ปล่อยทุกตัวไว้บน production
-- Gallery ไม่จำกัดจำนวนรูป: desktop แสดง thumbnail 4 รูปใน viewport แล้วเลื่อนแนวตั้งเมื่อมีมากกว่า 4 รูป ส่วน mobile ใช้ thumbnail rail แนวนอน
-- หน้า `/projects` ใช้ thumbnail rail แนวนอนในการ์ดแต่ละใบ จำนวนรูปของแต่ละโปรเจกต์ไม่จำเป็นต้องเท่ากัน
+- Placeholder ของ Demo และ Repository ต้องไม่ทำท่าทางเหมือนลิงก์จนกว่าจะมี URL จริง
 - หาก section ใดไม่ช่วยให้ recruiter ตัดสินใจเรียกสัมภาษณ์ ควรย้ายไป detail page หรือตัดออก
 
 ## 10. Content Rules
 
 - ทุกโปรเจกต์ควรตอบให้ได้: ปัญหาคืออะไร, เรารับผิดชอบอะไร, ทำอย่างไร, ผลลัพธ์คืออะไร
-- Metrics ที่ไม่ยืนยันต้องใช้ `XX`, `XX%`, `XXh` และติดคำว่า `replace later`
+- ไม่แสดง Metrics ใน project cards; หากจะนำกลับมาต้องเป็นข้อมูลจริงที่ตรวจสอบได้และได้รับการอนุมัติก่อน
 - หลีกเลี่ยงคำกว้าง เช่น “improved performance” หากไม่มีหลักฐาน
 - Project cover ต้องอธิบายผลิตภัณฑ์ได้โดยไม่ต้องอ่านย่อหน้ายาว
 - External link แสดงเมื่อมี URL จริงเท่านั้น ระหว่างรอใช้ placeholder ที่ไม่คลิก
@@ -285,11 +233,8 @@ Components หลัก:
 
 - `SectionLabel` — หมายเลขวงกลม + mono label
 - `HeroSystem` — orbital signature
-- `ProjectGallery` — main image + scrollable variable-length thumbnails + controls
-- `ProjectArchive` — รายชื่อโปรเจกต์เพิ่มเติมแบบกระชับ ไม่แย่งความเด่นจาก featured work
-- `LanguageToggle` — ตัวเลือก EN / TH ที่ใช้ร่วมกันทุก route และจำค่าบนอุปกรณ์
-- `ProjectMetrics` — ตัวเลข impact สามช่อง
-- `CaseStudyTabs` — Problem / My role / Challenge / Result
+- `ProjectGallery` — รูปหลัก ปุ่ม Previous/Next และ thumbnail rail ที่รองรับจำนวนรูปไม่เท่ากัน
+- `ProjectCard` — case-study preview เต็มรูปแบบสำหรับโปรเจกต์ทั้ง 7 รายการ
 - `SkillGrid` — สี่หมวดทักษะ
 - `ContactStatement` — CTA ขนาดใหญ่บน Cobalt
 
@@ -298,15 +243,13 @@ Components หลัก:
 กติกา component:
 
 - ใช้ border และ spacing ก่อนใช้ shadow
-- Shadow ใช้เฉพาะ element ที่ลอยจริง เช่น floating tag
+- Shadow ใช้เฉพาะ element ที่ลอยจริงและจำเป็นต่อ hierarchy
 - Border radius ต่ำสำหรับ panel และใช้ pill เฉพาะ metadata/tag/control
 - Interaction ต้องรองรับ keyboard และมี accessible label
 
 ## 12. Accessibility
 
 - Contrast ของข้อความหลักต้องผ่าน WCAG AA
-- ปุ่ม gallery มี `aria-label` และ `aria-pressed`
-- Tabs ใช้ `role="tablist"`, `role="tab"`, `aria-selected`
 - รูปจริงต้องมี alt text อธิบายสิ่งที่เห็น ไม่ใช้ชื่อไฟล์เป็น alt
 - Decorative signal, grid และ cursor aura ใช้ `aria-hidden`
 - Motion ทุกประเภทต้องเคารพ `prefers-reduced-motion`
@@ -328,10 +271,11 @@ npm run lint → Vite production build → deploy
 ไฟล์สำคัญ:
 
 - `app/page.tsx` — content, interactions และ page composition
+- `app/project-images.ts` — รายชื่อไฟล์และ label ของรูปทั้งหมด แก้ชื่อหรือจำนวนรูปได้จากจุดเดียว
 - `app/globals.css` — design tokens, layout, motion และ responsive rules
 - `vite.vercel.config.ts` — Vercel build
 - `vercel.json` — production output configuration
-- `public/images/` — project gallery assets
+- `public/images/projects/` — project gallery assets แยกโฟลเดอร์ตามโปรเจกต์
 - `public/og.png` — social preview card
 
 ## 14. Do / Don't
@@ -349,31 +293,25 @@ npm run lint → Vite production build → deploy
 - เพิ่ม gradient สีรุ้งหรือ glassmorphism หลายชั้น
 - ใส่ card โค้งมนและ shadow ทุก section
 - ทำ cursor effect ใหญ่หรือสว่างจนรบกวนการอ่าน
-- แสดงทุกโปรเจกต์บนหน้าแรก
-- ใส่ metrics ที่ไม่สามารถอธิบายในห้องสัมภาษณ์ได้
+- เพิ่ม case study section ซ้ำกับข้อมูลที่มีอยู่ในการ์ดโปรเจกต์
+- นำ metrics grid หรือ floating tags กลับมาโดยไม่มีเหตุผลด้านเนื้อหา
 - เพิ่ม animation ที่เล่นซ้ำทุกครั้งเมื่อเลื่อนขึ้นลง
 
 ## 15. Next Recommended Phase
 
-1. เติมบทบาท เทคโนโลยี ผลลัพธ์ และ visibility ของ BackTest ใน Project archive
-2. ยืนยันหรือแก้ Photography, Running และ Music ให้เป็นงานอดิเรกจริง
-3. เตรียมรูปตามจำนวนที่ช่วยเล่าเรื่องของแต่ละโปรเจกต์ โดยไม่กำหนดขั้นต่ำหรือสูงสุดตายตัว
-4. สร้าง `/projects` index
-5. สร้าง detail page สำหรับ 1–2 case studies ที่แข็งแรงที่สุด
-6. เติม demo URL, repository URL และ metrics ที่ยืนยันแล้ว
-7. ตรวจ mobile crop และ alt text หลังใส่รูปจริง
+1. เปลี่ยนไฟล์รูป placeholder ใน `public/images/` ด้วย screenshot จริงของแต่ละโปรเจกต์
+2. แทนค่า draft subtitle, role, period, description, impact และ tech stack ด้วยข้อมูลจริง
+3. เติม Demo หรือ Repository link เฉพาะรายการที่มีปลายทางจริง
 
 ## 16. Review Checklist
 
 ก่อน push หรือ deploy ทุกครั้ง:
 
-- [ ] Featured projects บนหน้าแรกไม่เกิน 3 ชิ้น
-- [ ] ไม่มี `XX` ที่หลงเหลือโดยไม่ได้ตั้งใจในเวอร์ชันสมัครงานจริง
-- [ ] รูปทุกไฟล์โหลดและ crop สวยทั้ง desktop/mobile
+- [ ] หน้าแรกแสดง full project card ครบทั้ง 7 รายการและไม่มี compact archive หลงเหลือ
+- [ ] Gallery ของแต่ละโปรเจกต์เปลี่ยนรูปได้ทั้งปุ่ม Previous/Next และ thumbnail
 - [ ] External links เปิดปลายทางถูกต้อง
 - [ ] ESLint ผ่าน
 - [ ] Sites build ผ่าน
 - [ ] Vercel build ผ่าน
-- [ ] Keyboard ใช้ gallery และ tabs ได้
 - [ ] Reduced-motion mode ยังอ่านเนื้อหาได้ครบ
 - [ ] Social preview ยังตรงกับ visual identity ปัจจุบัน

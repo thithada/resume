@@ -6,7 +6,6 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  CircleDot,
   Code2,
   Copy,
   Download,
@@ -17,10 +16,11 @@ import {
   MapPin,
   Phone,
   Plus,
-  Sparkles,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { LanguageToggle, useLanguage } from "./i18n";
+import { projectImages } from "./project-images";
+
+const t = (text: string) => text;
 
 const projects = [
   {
@@ -30,24 +30,9 @@ const projects = [
     role: "Software Developer · Bon8 Internship",
     period: "2026 — Present",
     status: "In progress",
-    images: [
-      { src: "/images/check-pd-01.webp", label: "Cover" },
-      { src: "/images/check-pd-02.webp", label: "Assessment" },
-      { src: "/images/check-pd-03.webp", label: "Results" },
-      { src: "/images/check-pd-04.webp", label: "Mobile flow" },
-    ],
-    description:
-      "A mobile-first health assessment experience that guides users through digital tests, tracks progress, and turns complex sensor interactions into an approachable flow.",
-    impact: [
-      "Built five assessment modules using audio recording, motion sensors, and touch interactions.",
-      "Created responsive registration, settings, assessment, history, and results journeys.",
-      "Developed reusable mobile components, swipe navigation, animations, persistent forms, and frontend tests.",
-    ],
-    metrics: [
-      { value: "05", label: "Assessment modules", placeholder: false },
-      { value: "XX", label: "Users or test cases", placeholder: true },
-      { value: "XX%", label: "Completion improvement", placeholder: true },
-    ],
+    images: projectImages["check-pd"],
+    description: "A mobile-first health assessment experience that turns complex sensor interactions into an approachable flow.",
+    impact: ["Built five assessment modules using audio, motion, and touch interactions.", "Created responsive registration, assessment, history, and results journeys.", "Developed reusable components, persistent forms, animations, and frontend tests."],
     tech: ["React", "TypeScript", "LINE LIFF", "Web APIs"],
   },
   {
@@ -57,24 +42,9 @@ const projects = [
     role: "Software Developer · Bon8 Internship",
     period: "2026 — Present",
     status: "Live product",
-    images: [
-      { src: "/images/gen-h-01.webp", label: "Cover" },
-      { src: "/images/gen-h-02.webp", label: "Quests" },
-      { src: "/images/gen-h-03.webp", label: "Badges" },
-      { src: "/images/gen-h-04.webp", label: "Leaderboard" },
-    ],
-    description:
-      "A gamified platform that encourages healthy, sustainable habits through daily quests, progress tracking, badges, and competitive leaderboards.",
-    impact: [
-      "Delivered quest, badge, notification, Hall of Fame, and XP-based leaderboard features.",
-      "Implemented server logic, database schemas, seeding, progress tracking, and image submissions.",
-      "Integrated LINE LIFF registration and session flows across a responsive component system.",
-    ],
-    metrics: [
-      { value: "05+", label: "Core feature systems", placeholder: false },
-      { value: "XX", label: "Daily active users", placeholder: true },
-      { value: "XX%", label: "Quest completion rate", placeholder: true },
-    ],
+    images: projectImages["gen-h"],
+    description: "A gamified platform that encourages healthy habits through daily quests, progress tracking, badges, and competitive leaderboards.",
+    impact: ["Delivered quest, badge, notification, Hall of Fame, and leaderboard features.", "Implemented server logic, database schemas, seeding, progress tracking, and image submissions.", "Integrated LINE LIFF registration and session flows across a responsive system."],
     tech: ["Next.js", "React", "Prisma", "PostgreSQL", "LINE LIFF"],
   },
   {
@@ -84,33 +54,59 @@ const projects = [
     role: "Software Engineer · NARIT Internship",
     period: "2025 — 2026",
     status: "Completed",
-    images: [
-      { src: "/images/nashgui-01.webp", label: "Cover" },
-      { src: "/images/nashgui-02.webp", label: "Commands" },
-      { src: "/images/nashgui-03.webp", label: "Templates" },
-      { src: "/images/nashgui-04.webp", label: "Workflow" },
-    ],
-    description:
-      "A web application for generating and managing command sets used to control radio telescope equipment—streamlining highly technical operation workflows.",
-    impact: [
-      "Translated Figma designs into responsive React and Tailwind CSS interfaces.",
-      "Integrated authenticated FastAPI REST endpoints and structured frontend state flows.",
-      "Containerized application services with Docker for consistent deployment environments.",
-    ],
-    metrics: [
-      { value: "01", label: "Telescope workflow", placeholder: false },
-      { value: "XX", label: "Commands generated", placeholder: true },
-      { value: "XXh", label: "Operator time saved", placeholder: true },
-    ],
+    images: projectImages.nashgui,
+    description: "A web application for generating and managing command sets used to control radio telescope equipment.",
+    impact: ["Translated Figma designs into responsive React interfaces.", "Integrated authenticated FastAPI endpoints and structured frontend state flows.", "Containerized application services with Docker for consistent environments."],
     tech: ["React", "FastAPI", "MariaDB", "Docker"],
   },
-];
-
-const additionalProjects = [
-  { number: "04", title: "repair-report", visibility: "Public" },
-  { number: "05", title: "autocar", visibility: "Public" },
-  { number: "06", title: "Project-nutrition", visibility: "Private" },
-  { number: "07", title: "BackTest", visibility: "Add visibility" },
+  {
+    number: "04",
+    title: "Aurum",
+    subtitle: "Strategy backtesting system · Details to complete",
+    role: "Add your role · Portfolio draft",
+    period: "Add period",
+    status: "Add visibility",
+    images: projectImages.aurum,
+    description: "Replace this draft with the strategy being tested, the data pipeline, and how users interpret the results.",
+    impact: ["Add the backtesting logic you developed.", "Add a data or performance challenge.", "Add the result or insight produced."],
+    tech: ["Add language", "Add data source", "Add framework"],
+  },
+  {
+    number: "05",
+    title: "Project-nutrition",
+    subtitle: "Nutrition tracking product · Details to complete",
+    role: "Add your role · Portfolio draft",
+    period: "Add period",
+    status: "Private",
+    images: projectImages["project-nutrition"],
+    description: "Replace this draft with the nutrition problem, the target users, and the experience or system you designed.",
+    impact: ["Add the nutrition workflow you implemented.", "Add an important product or data decision.", "Add the strongest project result."],
+    tech: ["Add stack", "Add database", "Add integration"],
+  },
+  {
+    number: "06",
+    title: "Autocar",
+    subtitle: "Automotive project · Details to complete",
+    role: "Add your role · Portfolio draft",
+    period: "Add period",
+    status: "Public",
+    images: projectImages.autocar,
+    description: "Replace this draft with the project context, the automotive workflow, and the part of the product you built.",
+    impact: ["Add the user or business problem.", "Add the feature you owned.", "Add the final outcome or learning."],
+    tech: ["Add stack", "Add API", "Add deployment"],
+  },
+  {
+    number: "07",
+    title: "repair-report",
+    subtitle: "Repair reporting workflow",
+    role: "Add your role · Portfolio draft",
+    period: "Add period",
+    status: "Public",
+    images: projectImages["repair-report"],
+    description: "Replace this draft with the repair problem, the users involved, and how your solution improves the reporting process.",
+    impact: ["Add the main problem you solved.", "Add your strongest technical decision.", "Add a result, lesson, or measurable outcome."],
+    tech: ["Add stack", "Add database", "Add deployment"],
+  },
 ];
 
 const skillGroups = [
@@ -118,29 +114,6 @@ const skillGroups = [
   { label: "Backend", items: ["FastAPI", "API Routes", "RESTful API", "Prisma ORM"] },
   { label: "Data & DevOps", items: ["PostgreSQL", "MySQL", "MariaDB", "Docker", "Git"] },
   { label: "Languages & AI", items: ["JavaScript", "Python", "PHP", "ChatGPT", "Claude", "Codex"] },
-];
-
-const studySteps = [
-  {
-    label: "Problem",
-    title: "Make complex screening feel human.",
-    text: "The experience needed to capture meaningful audio, motion, and touch signals without making a health assessment feel technical or intimidating on a phone.",
-  },
-  {
-    label: "My role",
-    title: "Turn requirements into a product system.",
-    text: "I translated provided flows and designs into reusable React architecture across registration, settings, five assessments, history, and result journeys.",
-  },
-  {
-    label: "Challenge",
-    title: "Sensors, state, and mobile interaction.",
-    text: "The work combined browser microphone and motion access, persistent incomplete answers, responsive components, swipe navigation, animations, and testable frontend behavior.",
-  },
-  {
-    label: "Result",
-    title: "Five modules ready for the next phase.",
-    text: "The frontend assessment system is in place. The next phase is backend development and machine-learning analysis. Add validated user and testing outcomes here later.",
-  },
 ];
 
 function SectionLabel({ number, children }: { number: string; children: React.ReactNode }) {
@@ -152,19 +125,7 @@ function SectionLabel({ number, children }: { number: string; children: React.Re
   );
 }
 
-function ReplaceableImage({
-  src,
-  alt,
-  label,
-  size,
-  replaceLabel = "Replace image",
-}: {
-  src: string;
-  alt: string;
-  label: string;
-  size: string;
-  replaceLabel?: string;
-}) {
+function ReplaceableImage({ src, alt, label, size }: { src: string; alt: string; label: string; size: string }) {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -176,32 +137,16 @@ function ReplaceableImage({
         <span>{size}</span>
         <small>{src}</small>
       </div>
-      {/* Native img keeps the shared component compatible with both vinext and the Vite/Vercel build. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className={loaded ? "loaded" : ""}
-        src={src}
-        alt={alt}
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(false)}
-      />
-      <span className="replace-tag"><Plus size={12} /> {replaceLabel}</span>
+      <img className={loaded ? "loaded" : ""} src={src} alt={alt} onLoad={() => setLoaded(true)} onError={() => setLoaded(false)} />
+      <span className="replace-tag"><Plus size={12} /> Replace image</span>
     </div>
   );
 }
 
-function ProjectGallery({
-  projectTitle,
-  images,
-  t,
-}: {
-  projectTitle: string;
-  images: Array<{ src: string; label: string }>;
-  t: (text: string) => string;
-}) {
+function ProjectGallery({ projectTitle, images }: { projectTitle: string; images: Array<{ src: string; label: string }> }) {
   const [activeImage, setActiveImage] = useState(0);
-  const previous = () => setActiveImage((current) => (current - 1 + images.length) % images.length);
-  const next = () => setActiveImage((current) => (current + 1) % images.length);
+  const count = images.length;
   const currentImage = images[activeImage] ?? images[0];
   const formatCount = (value: number) => String(value).padStart(2, "0");
 
@@ -210,38 +155,19 @@ function ProjectGallery({
   return (
     <div className="project-gallery">
       <div className="gallery-main">
-        <ReplaceableImage
-          src={currentImage.src}
-          alt={`${projectTitle} — ${t(currentImage.label)}`}
-          label={`${projectTitle.toUpperCase()} / ${t(currentImage.label).toUpperCase()}`}
-          size="1600 × 1000 px"
-          replaceLabel={t("Replace image")}
-        />
+        <ReplaceableImage src={currentImage.src} alt={`${projectTitle} — ${currentImage.label}`} label={`${projectTitle.toUpperCase()} / ${currentImage.label.toUpperCase()}`} size="1600 × 1000 px" />
         <div className="gallery-controls">
-          <span>{formatCount(activeImage + 1)} / {formatCount(images.length)}</span>
+          <span>{formatCount(activeImage + 1)} / {formatCount(count)}</span>
           <div>
-            <button type="button" onClick={previous} aria-label={`${t("Previous")} ${projectTitle}`}><ChevronLeft size={16} /></button>
-            <button type="button" onClick={next} aria-label={`${t("Next")} ${projectTitle}`}><ChevronRight size={16} /></button>
+            <button type="button" onClick={() => setActiveImage((current) => (current - 1 + count) % count)} aria-label={`Previous ${projectTitle}`}><ChevronLeft size={16} /></button>
+            <button type="button" onClick={() => setActiveImage((current) => (current + 1) % count)} aria-label={`Next ${projectTitle}`}><ChevronRight size={16} /></button>
           </div>
         </div>
       </div>
-      <div className="gallery-thumbnails" aria-label={`${projectTitle} ${t("image gallery")}`}>
+      <div className="gallery-thumbnails" aria-label={`${projectTitle} image gallery`}>
         {images.map((image, index) => (
-          <button
-            className={activeImage === index ? "active" : ""}
-            key={image.src}
-            type="button"
-            onClick={() => setActiveImage(index)}
-            aria-label={`${t("Show")} ${t(image.label)}`}
-            aria-pressed={activeImage === index}
-          >
-            <ReplaceableImage
-              src={image.src}
-              alt=""
-              label={formatCount(index + 1)}
-              size={t(image.label)}
-              replaceLabel={t("Replace image")}
-            />
+          <button className={activeImage === index ? "active" : ""} key={image.src} type="button" onClick={() => setActiveImage(index)} aria-label={`Show ${projectTitle} ${image.label}`} aria-pressed={activeImage === index}>
+            <ReplaceableImage src={image.src} alt="" label={formatCount(index + 1)} size={image.label} />
           </button>
         ))}
       </div>
@@ -250,15 +176,13 @@ function ProjectGallery({
 }
 
 export default function Home() {
-  const { language, setLanguage, t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copied, setCopied] = useState(false);
-  const [activeStudy, setActiveStudy] = useState(0);
   const cursorAura = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.title = language === "th" ? "Thithada Islam — วิศวกรซอฟต์แวร์" : "Thithada Islam — Software Engineer";
-  }, [language]);
+    document.title = "Thithada Islam — Software Engineer";
+  }, []);
 
   useEffect(() => {
     const updateProgress = () => {
@@ -333,7 +257,7 @@ export default function Home() {
   };
 
   return (
-    <main data-language={language}>
+    <main>
       <div className="cursor-aura" ref={cursorAura} aria-hidden="true" />
       <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
 
@@ -341,15 +265,12 @@ export default function Home() {
         <a className="monogram" href="#top" aria-label={t("Back to top")}>TI<span>.</span></a>
         <div className="nav-links">
           <a href="#work">{t("Work")}</a>
-          <a href="/projects">{t("All projects")}</a>
-          <a href="#case-study">{t("Case study")}</a>
           <a href="#expertise">{t("Expertise")}</a>
           <a href="#journey">{t("Journey")}</a>
         </div>
         <div className="nav-actions">
-          <LanguageToggle language={language} setLanguage={setLanguage} />
           <a className="nav-resume" href="/resume_thithada.pdf" download>
-            {t("Résumé")} <Download size={15} />
+            {t("Resume")} <Download size={15} />
           </a>
         </div>
       </nav>
@@ -383,17 +304,14 @@ export default function Home() {
           <div className="system-orbit orbit-two" />
           <div className="system-core">
             <span className="core-kicker">{t("CURRENT FOCUS")}</span>
-            <strong>{language === "th" ? <>ผลิตภัณฑ์ ×<br />วิศวกรรม</> : <>PRODUCT ×<br />ENGINEERING</>}</strong>
+            <strong>PRODUCT ×<br />ENGINEERING</strong>
             <small>React · TypeScript · AI</small>
           </div>
-          <div className="floating-tag tag-one"><Sparkles size={14} /> {t("AI curious")}</div>
-          <div className="floating-tag tag-two"><CircleDot size={14} /> {t("UX minded")}</div>
-          <div className="floating-tag tag-three">{t("03 shipped products")}</div>
         </div>
 
         <div className="hero-metrics">
           <div><strong>3.46</strong><span>GPA</span></div>
-          <div><strong>03</strong><span>{t("Featured projects")}</span></div>
+          <div><strong>07</strong><span>{t("Projects")}</span></div>
           <div><strong>2026</strong><span>{t("Graduating")}</span></div>
           <a href="mailto:thithadatomas@gmail.com"><span>{t("Let’s build something")}</span><ArrowUpRight size={22} /></a>
         </div>
@@ -412,7 +330,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="work section-shell dark-section scroll-reveal" id="work" data-reveal>
+      <section className="work section-shell dark-section" id="work">
         <SectionLabel number="02">{t("Selected work")}</SectionLabel>
         <div className="work-heading">
           <h2>{t("Projects with")}<br /><em>{t("real-world signal.")}</em></h2>
@@ -422,32 +340,22 @@ export default function Home() {
           {projects.map((project) => (
             <article className="project-card scroll-reveal" data-reveal key={project.number}>
               <div className="project-topline">
-                <span>{project.number}</span>
+                <span>{project.number} / 07</span>
                 <span className="project-status"><i />{t(project.status)}</span>
               </div>
 
-              <ProjectGallery projectTitle={project.title} images={project.images} t={t} />
+              <ProjectGallery projectTitle={project.title} images={project.images} />
 
               <div className="project-title-row">
                 <div>
                   <h3>{project.title}</h3>
                   <p>{t(project.subtitle)}</p>
                 </div>
-                <ArrowUpRight className="project-arrow" size={28} />
+                <ArrowUpRight className="project-arrow" size={28} aria-hidden="true" />
               </div>
               <div className="project-meta">
                 <span>{t(project.role)}</span>
                 <span>{t(project.period)}</span>
-              </div>
-
-              <div className="project-metrics">
-                {project.metrics.map((metric) => (
-                  <div className={metric.placeholder ? "metric-placeholder" : ""} key={metric.label}>
-                    <strong>{metric.value}</strong>
-                    <span>{t(metric.label)}</span>
-                    {metric.placeholder && <small>{t("replace later")}</small>}
-                  </div>
-                ))}
               </div>
 
               <p className="project-description">{t(project.description)}</p>
@@ -457,74 +365,18 @@ export default function Home() {
               <div className="project-links" aria-label={`${project.title} ${t("links")}`}>
                 <span><ExternalLink size={14} /> {t("Add live demo")}</span>
                 <span><Code2 size={14} /> {t("Add repository")}</span>
-                <span><ImageIcon size={14} /> {t("Add project screenshots")}</span>
+                <span><ImageIcon size={14} /> {t("Replace project screenshots")}</span>
               </div>
               <div className="tech-list">
-                {project.tech.map((tech) => <span key={tech}>{tech}</span>)}
+                {project.tech.map((tech) => <span key={tech}>{t(tech)}</span>)}
               </div>
             </article>
           ))}
         </div>
-
-        <div className="project-archive">
-          <div className="archive-heading">
-            <span>{t("MORE BUILDS / 04—07")}</span>
-            <h3>{t("Project archive")}</h3>
-            <p>{t("Additional work ready for details, screenshots, and case-study notes.")}</p>
-            <a href="/projects">{t("Explore all projects")} <ArrowUpRight size={16} /></a>
-          </div>
-          <div className="archive-list">
-            {additionalProjects.map((project) => (
-              <a href={`/projects#${project.title.toLowerCase()}`} key={project.number}>
-                <span>{project.number}</span>
-                <strong>{project.title}</strong>
-                <small className={project.visibility === "Private" ? "private" : ""}>{t(project.visibility)}</small>
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="case-study section-shell scroll-reveal" id="case-study" data-reveal>
-        <SectionLabel number="03">{t("Featured case study")}</SectionLabel>
-        <div className="case-heading">
-          <div>
-            <span className="case-kicker">{t("CHECK PD · DEEP DIVE")}</span>
-            <h2>{t("Beyond the screens.")}<br /><em>{t("Inside the thinking.")}</em></h2>
-          </div>
-        </div>
-
-        <div className="case-panel">
-          <div className="case-tabs" role="tablist" aria-label={t("Case study stages")}>
-            {studySteps.map((step, index) => (
-              <button
-                className={activeStudy === index ? "active" : ""}
-                key={step.label}
-                type="button"
-                role="tab"
-                aria-selected={activeStudy === index}
-                onClick={() => setActiveStudy(index)}
-              >
-                <span>0{index + 1}</span>{t(step.label)}
-              </button>
-            ))}
-          </div>
-          <div className="case-content" role="tabpanel">
-            <span>0{activeStudy + 1} / 04</span>
-            <h3>{t(studySteps[activeStudy].title)}</h3>
-            <p>{t(studySteps[activeStudy].text)}</p>
-          </div>
-          <div className="case-signal" aria-hidden="true">
-            {[42, 68, 34, 82, 58, 92, 48, 74, 38, 66, 52, 88].map((height, index) => (
-              <i key={index} style={{ height: `${height}%`, animationDelay: `${index * 80}ms` }} />
-            ))}
-          </div>
-        </div>
       </section>
 
       <section className="expertise section-shell scroll-reveal" id="expertise" data-reveal>
-        <SectionLabel number="04">{t("Expertise")}</SectionLabel>
+        <SectionLabel number="03">{t("Expertise")}</SectionLabel>
         <div className="expertise-heading">
           <h2>{t("A versatile stack.")}<br /><em>{t("One clear purpose.")}</em></h2>
         </div>
@@ -540,7 +392,7 @@ export default function Home() {
       </section>
 
       <section className="journey section-shell scroll-reveal" id="journey" data-reveal>
-        <SectionLabel number="05">{t("Journey")}</SectionLabel>
+        <SectionLabel number="04">{t("Journey")}</SectionLabel>
         <div className="journey-layout">
           <h2>{t("Always learning.")}<br /><em>{t("Always building.")}</em></h2>
           <div className="timeline">
