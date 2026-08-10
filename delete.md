@@ -326,7 +326,7 @@ Case study นี้สามารถนำกลับมาใช้ใน de
 - Aurum: `XX Strategies tested`, `XX Data points`, `XX% Performance result`
 - Project-nutrition: `XX Tracking features`, `XX Nutrition records`, `XX% Goal completion`
 - Autocar: `XX Core features`, `XX Data records`, `XX% Process improvement`
-- repair-report: `XX Reports handled`, `XX% Time reduced`, `XX Active users`
+- repair-report (renamed to Maintenance UP): `XX Reports handled`, `XX% Time reduced`, `XX Active users`
 
 เหตุผลในการนำออกคือช่วยลด visual noise และไม่แสดงตัวเลข placeholder ที่ยังไม่มีข้อมูลยืนยัน
 
@@ -342,4 +342,16 @@ Case study นี้สามารถนำกลับมาใช้ใน de
 - Aurum: `Add the backtesting logic you developed.` / `Add a data or performance challenge.` / `Add the result or insight produced.`
 - Project-nutrition: `Add the nutrition workflow you implemented.` / `Add an important product or data decision.` / `Add the strongest project result.`
 - Autocar: `Add the user or business problem.` / `Add the feature you owned.` / `Add the final outcome or learning.`
-- repair-report: `Add the main problem you solved.` / `Add your strongest technical decision.` / `Add a result, lesson, or measurable outcome.`
+- repair-report (renamed to Maintenance UP): `Add the main problem you solved.` / `Add your strongest technical decision.` / `Add a result, lesson, or measurable outcome.`
+
+## Detailed project tech stacks reserved for case studies
+
+หน้าแรกแสดงเพียง 4–6 กลุ่มต่อโปรเจกต์เพื่อให้ recruiter อ่านง่าย รายละเอียดต่อไปนี้เก็บไว้สำหรับหน้า case study ในอนาคต:
+
+- Check PD: React 19, Vite 6, TypeScript, React Router DOM 7, Tailwind CSS 4, clsx, tailwind-merge, path alias `@/*` และ Vite proxy `/api` ไปยัง backend ที่วางแผนเป็น Python/FastAPI; ปัจจุบันยังไม่ยืนยันว่า backend อยู่ในโปรเจกต์นี้
+- Gen-H: Next.js 16 App Router, Server Actions, API Routes, TypeScript, React 19, Tailwind CSS 4, LINE LIFF, LINE Messaging API, Prisma, MySQL, AWS S3, AWS EC2 with Node.js 20, PM2 Cluster, Nginx และ GitLab CI/CD
+- NashGUI: React 19, TypeScript, React Router 7, Vite 7, Ant Design 6, Tailwind CSS 4, Python, FastAPI, SQLModel, SQLAlchemy, MariaDB, JWT, Argon2, Bun/npm, Docker Compose, Nginx, REST API, CodeMirror, dnd-kit, Lucide React, Day.js, React Hot Toast, Pydantic และ Sentry SDK; ใช้ FastAPI ไม่ใช่ Flask
+- Aurum: Next.js, React, TypeScript, Tailwind CSS, Lightweight Charts, Cloudflare Workers, Cloudflare D1 with Drizzle ORM, Cloudflare R2, Dukascopy XAU/USD, Vite และ Vinext
+- Project-nutrition: Next.js 15, React 19, TypeScript, Tailwind CSS 4, Framer Motion, Lucide React, API Routes, PostgreSQL, Prisma, JWT, bcrypt, iron-session, Cloudinary, Redis, Upstash, ExcelJS, CSV Stringify และ Resend
+- Autocar: Next.js 15, React, Tailwind CSS, Node.js, Express, MySQL/TiDB และ Vercel
+- Maintenance UP: React, Node.js, Express, MongoDB และ Socket.IO

@@ -199,9 +199,10 @@ Home
 
 - ใช้หัวข้อ `SELECTED WORK` และ `Projects with real-world signal.`
 - โปรเจกต์ทั้ง 7 รายการมีน้ำหนักเท่ากันในรูปแบบ full-width project card ไม่มีการแบ่ง 3 โปรเจกต์หลัก + 4 โปรเจกต์ย่อย
-- ลำดับหลัก: `01 Check PD`, `02 Gen-H: Let’s Move`, `03 NashGUI`, `04 Aurum`, `05 Project-nutrition`, `06 Autocar`, `07 repair-report`
+- ลำดับหลัก: `01 Check PD`, `02 Gen-H: Let’s Move`, `03 NashGUI`, `04 Aurum`, `05 Project-nutrition`, `06 Autocar`, `07 Maintenance UP`
 - ทุกการ์ดแสดง gallery หลายรูป, ชื่อ, subtitle, role, period, status, description และ tech stack โดยไม่แสดง impact bullet list หรือ metrics grid
 - ไม่แสดง badge `Replace project screenshots` เมื่อมีรูปจริงแล้ว
+- Tech stack แสดงไม่เกิน 4–6 กลุ่มต่อโปรเจกต์ รวมของที่ทำงานคู่กันด้วย `·` และไม่ใส่ React/Tailwind/Vite ซ้ำเมื่อ framework หลักสื่อความหมายเพียงพอ
 - จำนวนรูปของแต่ละโปรเจกต์ยืดหยุ่นได้ ไม่บังคับให้เท่ากัน และ thumbnail rail ต้อง scroll ได้เมื่อรูปมีจำนวนมาก
 - Container ของ Selected Work ห้ามใช้ `scroll-reveal` เพราะความสูงหลาย viewport จะทำให้ IntersectionObserver ไม่ถึง threshold; ใช้ reveal เฉพาะการ์ดแต่ละใบ
 - ไม่มีหน้า `/projects`; เนื้อหาโปรเจกต์ทั้งหมดอยู่หน้าแรก

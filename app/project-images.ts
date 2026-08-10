@@ -51,9 +51,9 @@ export const projectImages: Record<string, ProjectImage[]> = {
     { src: "/images/projects/autocar/autocar4.png", label: "Booking details" },
     { src: "/images/projects/autocar/autocar5.png", label: "Booking calendar" },
   ],
-  "repair-report": [
-    { src: "/images/projects/repair-report/repair-report1.png", label: "Cover" },
-    { src: "/images/projects/repair-report/repair-report2.png", label: "Report form" },
-    { src: "/images/projects/repair-report/repair-report3.png", label: "Admin dashboard" },
+  "maintenance-up": [
+    { src: "/images/projects/maintenance-up/maintenance-up1.png", label: "Cover" },
+    { src: "/images/projects/maintenance-up/maintenance-up2.png", label: "Request form" },
+    { src: "/images/projects/maintenance-up/maintenance-up3.png", label: "Admin dashboard" },
   ],
 };

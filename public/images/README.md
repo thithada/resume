@@ -10,7 +10,7 @@ projects/
 |-- aurum/               aurum1.png through aurum6.png
 |-- project-nutrition/   project-nutrition1.png through project-nutrition6.png
 |-- autocar/             autocar1.png through autocar5.png
-`-- repair-report/       repair-report1.png through repair-report3.png
+`-- maintenance-up/      maintenance-up1.png through maintenance-up3.png
 ```
 
 The number controls the gallery order, so `autocar1.png` is shown before `autocar2.png`. To add another image, continue with the next number and add its path to the matching list in `app/project-images.ts`.
