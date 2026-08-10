@@ -355,3 +355,26 @@ Case study นี้สามารถนำกลับมาใช้ใน de
 - Project-nutrition: Next.js 15, React 19, TypeScript, Tailwind CSS 4, Framer Motion, Lucide React, API Routes, PostgreSQL, Prisma, JWT, bcrypt, iron-session, Cloudinary, Redis, Upstash, ExcelJS, CSV Stringify และ Resend
 - Autocar: Next.js 15, React, Tailwind CSS, Node.js, Express, MySQL/TiDB และ Vercel
 - Maintenance UP: React, Node.js, Express, MongoDB และ Socket.IO
+
+## Removed project link placeholders
+
+นำข้อความ `Add live demo` และ `Add repository` ออกจาก project cards แล้ว เปลี่ยนเป็นลิงก์จริงแบบมีเงื่อนไข โปรเจกต์ภายในที่ไม่มี repository จะไม่แสดงปุ่มแทนที่จะใช้ placeholder
+
+## Removed broad expertise list
+
+รายการ Expertise เดิมถูกลดให้ตรงกับโปรเจกต์จริงและอ่านง่ายขึ้น โดยเก็บรายการเดิมไว้ดังนี้:
+
+- Frontend: React, Next.js, TypeScript, Vue, Tailwind CSS
+- Backend: FastAPI, API Routes, RESTful API, Prisma ORM
+- Data & DevOps: PostgreSQL, MySQL, MariaDB, Docker, Git
+- Languages & AI: JavaScript, Python, PHP, ChatGPT, Claude, Codex
+
+Contact เดิมใช้ `Frontend · Backend · Full-stack · Remote / Hybrid` และเปลี่ยนเป็น `Frontend · Backend · Full-stack · On-site / Hybrid` ตามรูปแบบงานที่ต้องการ
+
+## Removed project-card arrow
+
+นำ `ArrowUpRight` ที่มุมขวาของ project cards ทั้ง 7 ใบออก พร้อม hover animation ของ `.project-arrow` เพราะตัวการ์ดไม่ได้เป็นลิงก์และมีปุ่ม `Open application` / `View repository` เป็นจุดกดที่ชัดเจนอยู่แล้ว
+
+จาก Expertise นำ `Ant Design · Framer Motion`, `AWS · Cloudflare` และ `Socket.IO` ออก และใช้ `Vue.js` แทนในกลุ่ม Frontend
+
+ภายหลังนำ `AWS · Cloudflare` กลับเข้าสู่กลุ่ม Cloud & Delivery เพราะเป็น platform หลักที่ปรากฏในหลายโปรเจกต์ ส่วน `Ant Design · Framer Motion` และ `Socket.IO` ยังคงไม่แสดงใน Expertise

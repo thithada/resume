@@ -33,6 +33,7 @@ const projects = [
     images: projectImages["check-pd"],
     description: "A self-screening application developed by King Chulalongkorn Memorial Hospital and the Thai Red Cross Society. It combines a guided questionnaire with phone-based finger movement, tremor, balance, and voice tests to flag potential Parkinson’s risk and support timely specialist follow-up.",
     tech: ["React 19 · TypeScript", "React Router 7", "LINE LIFF", "Web APIs"],
+    links: [{ href: "https://liff.line.me/2010563749-1UXdw2i4", label: "Open LINE application", kind: "project" }],
   },
   {
     number: "02",
@@ -44,6 +45,7 @@ const projects = [
     images: projectImages["gen-h"],
     description: "A LINE-based health mission platform that turns Thailand’s 10 National Health Recommendations into simple daily activities. Quests, points, badges, and progress tracking encourage lasting health literacy and healthier habits across ages, with the experience designed to extend into families and communities.",
     tech: ["Next.js 16 · TypeScript", "LINE LIFF · Messaging API", "Prisma · MySQL", "AWS S3 · EC2", "Nginx · PM2", "GitLab CI/CD"],
+    links: [{ href: "https://liff.line.me/2010190550-YYZhOdSJ", label: "Open LINE application", kind: "project" }],
   },
   {
     number: "03",
@@ -55,17 +57,22 @@ const projects = [
     images: projectImages.nashgui,
     description: "A web-based observation script generator for radio telescope operations. Researchers import CSV target data, configure tracking or cross-scan modes, schedules, pointing corrections, and backend parameters, then generate validated Python scripts for operator review and execution.",
     tech: ["React 19 · TypeScript", "FastAPI", "SQLModel · MariaDB", "JWT · Argon2", "Docker Compose · Nginx"],
+    links: [],
   },
   {
     number: "04",
     title: "Aurum",
     subtitle: "Gold trading strategy backtesting",
-    role: "Add your role · Portfolio draft",
-    period: "Add period",
-    status: "Add visibility",
+    role: "Full-stack Developer · Solo project",
+    period: "",
+    status: "Independent project",
     images: projectImages.aurum,
     description: "A backtesting system for gold trading strategies that uses historical market data to evaluate returns, risk, and signal accuracy. It helps refine trading plans before strategies are integrated into a live trading workflow.",
     tech: ["Next.js · TypeScript", "Lightweight Charts", "Cloudflare Workers", "D1 · Drizzle ORM", "Cloudflare R2", "Dukascopy XAU/USD"],
+    links: [
+      { href: "https://backtest-nr73q0bpo-tomas-projects18.vercel.app/", label: "Open application", kind: "project" },
+      { href: "https://gitlab.com/TomasTirty/backtest", label: "View repository", kind: "repository" },
+    ],
   },
   {
     number: "05",
@@ -77,6 +84,7 @@ const projects = [
     images: projectImages["project-nutrition"],
     description: "An academic nutrition data platform developed with a Pharmacy faculty advisor. Participants record meals, portions, timing, photos, and FFQ responses; the system estimates nutrients, BMR, and TDEE, while specialists review records, provide guidance, track trends, and export Excel or CSV datasets.",
     tech: ["Next.js 15 · TypeScript", "PostgreSQL · Prisma", "Cloudinary", "JWT Authentication"],
+    links: [{ href: "https://project-nutrition-blush.vercel.app/", label: "Open application", kind: "project" }],
   },
   {
     number: "06",
@@ -88,6 +96,10 @@ const projects = [
     images: projectImages.autocar,
     description: "An end-to-end vehicle and repair shop management platform with role-specific experiences for mechanics, customers, and administrators. It unifies appointments, service history, repair tracking, parts inventory, communication, staff assignments, financial reporting, and operational analytics in one system.",
     tech: ["Next.js 15", "Node.js · Express", "MySQL · TiDB", "Vercel"],
+    links: [
+      { href: "https://autocar2.vercel.app/", label: "Open application", kind: "project" },
+      { href: "https://github.com/thithada/autocar", label: "View repository", kind: "repository" },
+    ],
   },
   {
     number: "07",
@@ -99,14 +111,18 @@ const projects = [
     images: projectImages["maintenance-up"],
     description: "A campus maintenance platform that replaces paper-based repair forms with a responsive workflow for students and staff. Students submit photo-supported requests and track status, while administrators assign technicians, manage tickets, send real-time updates, and review performance reports.",
     tech: ["React", "Node.js · Express", "MongoDB", "Socket.IO"],
+    links: [
+      { href: "https://repair-up.netlify.app/", label: "Open application", kind: "project" },
+      { href: "https://github.com/thithada/repair-report", label: "View repository", kind: "repository" },
+    ],
   },
 ];
 
 const skillGroups = [
-  { label: "Frontend", items: ["React", "Next.js", "TypeScript", "Vue", "Tailwind CSS"] },
-  { label: "Backend", items: ["FastAPI", "API Routes", "RESTful API", "Prisma ORM"] },
-  { label: "Data & DevOps", items: ["PostgreSQL", "MySQL", "MariaDB", "Docker", "Git"] },
-  { label: "Languages & AI", items: ["JavaScript", "Python", "PHP", "ChatGPT", "Claude", "Codex"] },
+  { label: "Frontend", items: ["React · Next.js", "TypeScript · JavaScript", "React Router", "Vue.js"] },
+  { label: "Backend & Data", items: ["FastAPI · Node.js", "REST APIs · Server Actions", "Prisma · SQLModel", "PostgreSQL · MySQL"] },
+  { label: "Cloud & Delivery", items: ["AWS · Cloudflare", "Docker · Nginx", "GitLab CI/CD · Vercel", "Cloudinary · S3"] },
+  { label: "Platforms", items: ["LINE LIFF · Messaging API", "JWT · Session Auth", "Lightweight Charts"] },
 ];
 
 function SectionLabel({ number, children }: { number: string; children: React.ReactNode }) {
@@ -311,7 +327,6 @@ export default function Home() {
           <div className="system-core">
             <span className="core-kicker">{t("CURRENT FOCUS")}</span>
             <strong>PRODUCT ×<br />ENGINEERING</strong>
-            <small>React · TypeScript · AI</small>
           </div>
         </div>
 
@@ -357,18 +372,23 @@ export default function Home() {
                   <h3>{project.title}</h3>
                   <p>{t(project.subtitle)}</p>
                 </div>
-                <ArrowUpRight className="project-arrow" size={28} aria-hidden="true" />
               </div>
               <div className="project-meta">
                 <span>{t(project.role)}</span>
-                <span>{t(project.period)}</span>
+                  {project.period && <span>{t(project.period)}</span>}
               </div>
 
               <p className="project-description">{t(project.description)}</p>
-              <div className="project-links" aria-label={`${project.title} ${t("links")}`}>
-                <span><ExternalLink size={14} /> {t("Add live demo")}</span>
-                <span><Code2 size={14} /> {t("Add repository")}</span>
-              </div>
+              {project.links.length > 0 && (
+                <div className="project-links" aria-label={`${project.title} ${t("links")}`}>
+                  {project.links.map((link) => (
+                    <a href={link.href} key={link.href} target="_blank" rel="noreferrer">
+                      {link.kind === "repository" ? <Code2 size={14} /> : <ExternalLink size={14} />}
+                      {t(link.label)}
+                    </a>
+                  ))}
+                </div>
+              )}
               <div className="tech-list">
                 {project.tech.map((tech) => <span key={tech}>{t(tech)}</span>)}
               </div>
@@ -417,7 +437,7 @@ export default function Home() {
       <section className="contact section-shell scroll-reveal" id="contact" data-reveal>
         <div className="contact-noise" aria-hidden="true" />
         <div className="availability"><span className="status-dot" /> {t("Open to software engineering opportunities")}</div>
-        <p>{t("Frontend · Full-stack · Remote / Hybrid")}</p>
+        <p>{t("Frontend · Backend · Full-stack · On-site / Hybrid")}</p>
         <a className="contact-headline" href="mailto:thithadatomas@gmail.com">
           {t("Let’s make it")} <em>{t("real.")}</em><ArrowUpRight />
         </a>

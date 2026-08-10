@@ -203,6 +203,10 @@ Home
 - ทุกการ์ดแสดง gallery หลายรูป, ชื่อ, subtitle, role, period, status, description และ tech stack โดยไม่แสดง impact bullet list หรือ metrics grid
 - ไม่แสดง badge `Replace project screenshots` เมื่อมีรูปจริงแล้ว
 - Tech stack แสดงไม่เกิน 4–6 กลุ่มต่อโปรเจกต์ รวมของที่ทำงานคู่กันด้วย `·` และไม่ใส่ React/Tailwind/Vite ซ้ำเมื่อ framework หลักสื่อความหมายเพียงพอ
+- Project links แสดงเฉพาะปลายทางจริง ใช้ `Open LINE application`, `Open application` หรือ `View repository`; โปรเจกต์ภายในที่ไม่มี repository ต้องไม่แสดง placeholder
+- Expertise ใช้ 4 กลุ่ม กลุ่มละ 3–4 รายการ รวมเทคโนโลยีที่เกี่ยวข้องด้วย `·`; ไม่แสดง dependency ย่อยหรือรายชื่อ AI tools
+- Project card ไม่มีลูกศรมุมขวา เพราะตัวการ์ดไม่ใช่ลิงก์ ใช้เฉพาะปุ่ม `Open application` และ `View repository` เป็น affordance
+- Work preference ที่ Contact ใช้ `On-site / Hybrid` เท่านั้น ไม่เสนอ Remote
 - จำนวนรูปของแต่ละโปรเจกต์ยืดหยุ่นได้ ไม่บังคับให้เท่ากัน และ thumbnail rail ต้อง scroll ได้เมื่อรูปมีจำนวนมาก
 - Container ของ Selected Work ห้ามใช้ `scroll-reveal` เพราะความสูงหลาย viewport จะทำให้ IntersectionObserver ไม่ถึง threshold; ใช้ reveal เฉพาะการ์ดแต่ละใบ
 - ไม่มีหน้า `/projects`; เนื้อหาโปรเจกต์ทั้งหมดอยู่หน้าแรก

@@ -65,6 +65,31 @@ test("server-renders the portfolio content", async () => {
   assert.match(html, /Maintenance UP/);
   assert.match(html, /campus maintenance platform/);
   assert.match(html, /photo-supported requests/);
+  assert.match(html, /href="https:\/\/liff\.line\.me\/2010563749-1UXdw2i4"/);
+  assert.match(html, /href="https:\/\/liff\.line\.me\/2010190550-YYZhOdSJ"/);
+  assert.match(html, /href="https:\/\/gitlab\.com\/TomasTirty\/backtest"/);
+  assert.match(html, /href="https:\/\/backtest-nr73q0bpo-tomas-projects18\.vercel\.app\/"/);
+  assert.match(html, /href="https:\/\/project-nutrition-blush\.vercel\.app\/"/);
+  assert.match(html, /href="https:\/\/autocar2\.vercel\.app\/"/);
+  assert.match(html, /href="https:\/\/github\.com\/thithada\/autocar"/);
+  assert.match(html, /href="https:\/\/repair-up\.netlify\.app\/"/);
+  assert.match(html, /href="https:\/\/github\.com\/thithada\/repair-report"/);
+  assert.match(html, /Open LINE application/);
+  assert.match(html, /Open application/);
+  assert.match(html, /View repository/);
+  assert.doesNotMatch(html, /Add live demo|Add repository/);
+  assert.match(html, /Full-stack Developer · Solo project/);
+  assert.match(html, /Independent project/);
+  assert.doesNotMatch(html, /Add your role · Portfolio draft|Add period|Add visibility/);
+  assert.match(html, /Backend &amp; Data/);
+  assert.match(html, /Cloud &amp; Delivery/);
+  assert.match(html, /AWS · Cloudflare/);
+  assert.match(html, /LINE LIFF · Messaging API/);
+  assert.match(html, /Vue\.js/);
+  assert.match(html, /REST APIs · Server Actions/);
+  assert.match(html, /JWT · Session Auth/);
+  assert.match(html, /On-site \/ Hybrid/);
+  assert.doesNotMatch(html, /Remote \/ Hybrid|Languages &amp; AI|ChatGPT|Claude|Codex/);
   assert.doesNotMatch(html, /BackTest/);
   assert.doesNotMatch(html, /href="\/projects/);
   assert.doesNotMatch(html, /BEYOND CODE/);
@@ -94,6 +119,17 @@ test("keeps all seven projects on the single-page portfolio", async () => {
   assert.equal(techLists.length, 7);
   assert.ok(techLists.every(([, items]) => (items.match(/"[^"]+"/g) ?? []).length <= 6), "each project should show no more than six tech groups");
   assert.match(home, /title: "Check PD"[\s\S]*?tech: \["React 19 · TypeScript", "React Router 7", "LINE LIFF", "Web APIs"\]/);
+  const expertiseLists = [...home.matchAll(/label: "[^"]+", items: \[([^\]]*)\]/g)];
+  assert.equal(expertiseLists.length, 4);
+  assert.ok(expertiseLists.every(([, items]) => {
+    const count = (items.match(/"[^"]+"/g) ?? []).length;
+    return count >= 3 && count <= 4;
+  }), "each expertise group should show three or four focused items");
+  const expertiseSource = home.slice(home.indexOf("const skillGroups"), home.indexOf("function SectionLabel"));
+  assert.doesNotMatch(expertiseSource, /Ant Design|Framer Motion|Socket\.IO/);
+  assert.doesNotMatch(home, /project-arrow/);
+  assert.doesNotMatch(home, /Remote \/ Hybrid|Languages & AI/);
+  assert.match(home, /title: "NashGUI"[\s\S]*?links: \[\]/);
   assert.match(home, /projects\.map/);
   assert.match(home, /ProjectGallery projectTitle=\{project\.title\}/);
   assert.match(home, /naturalHeight > event\.currentTarget\.naturalWidth \* 1\.1/);
@@ -123,7 +159,7 @@ test("keeps all seven projects on the single-page portfolio", async () => {
     "project image filenames should use the folder name followed by a number",
   );
   await Promise.all(configuredImagePaths.map((imagePath) => access(new URL(`../public${imagePath}`, import.meta.url))));
-  assert.doesNotMatch(`${home}\n${imageConfig}`, /BackTest|backtest-|repair-report/);
+  assert.doesNotMatch(`${home}\n${imageConfig}`, /title: "BackTest"|projects\/backtest|projects\/repair-report|title: "repair-report"/);
   assert.doesNotMatch(home, /href="\/projects|Explore all projects/);
   assert.doesNotMatch(entry, /ProjectsPage|\/projects/);
   assert.doesNotMatch(vercel, /\/projects/);
